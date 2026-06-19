@@ -1,0 +1,141 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand: #fc3f1d;
+  --color-brand-soft: #ffe9e4;
+  --color-ink: #1a1a1a;
+  --color-muted: #6b6b6b;
+  --color-line: #ececec;
+  --color-canvas: #f6f6f8;
+  --color-ok: #2da84f;
+  --color-ok-soft: #e3f5e9;
+  --color-warn: #e0900a;
+  --color-warn-soft: #fdf0d8;
+  --color-risk: #e5302a;
+  --color-risk-soft: #fbe1e0;
+  --color-sky: #2b6def;
+  --color-sky-soft: #e4edfd;
+  --font-sans: "Inter", system-ui, "Segoe UI", Roboto, sans-serif;
+}
+
+/* Тёмная тема (E1): переопределяем токены в скоупе html.dark — text-ink/bg-canvas/
+   border-line и *-soft флипаются автоматически; литералы bg-white крываем точечно. */
+html.dark {
+  --color-ink: #e9e9ee;
+  --color-muted: #9aa0a6;
+  --color-line: #2a312c;
+  --color-canvas: #0e1712;
+  --color-brand-soft: #3a201b;
+  --color-ok-soft: #15271c;
+  --color-warn-soft: #2a2312;
+  --color-risk-soft: #2c1816;
+  --color-sky-soft: #16223a;
+}
+html.dark .bg-white { background-color: #15211b !important; }
+html.dark .bg-white\/95 { background-color: rgba(21, 33, 27, 0.95) !important; }
+html.dark .bg-white\/90 { background-color: rgba(21, 33, 27, 0.92) !important; }
+html.dark .bg-white\/85 { background-color: rgba(21, 33, 27, 0.88) !important; }
+html.dark .bg-white\/70 { background-color: rgba(21, 33, 27, 0.78) !important; }
+html.dark .shadow-2xl, html.dark .shadow-xl { box-shadow: 0 12px 30px rgba(0, 0, 0, 0.55) !important; }
+
+/* Recharts в тёмной теме: подписи осей/легенда/сетка/тултип используют светлые
+   хардкод-цвета — подсвечиваем их (цветные бары/радар НЕ трогаем). */
+html.dark .recharts-text,
+html.dark .recharts-cartesian-axis-tick-value,
+html.dark .recharts-polar-angle-axis-tick-value,
+html.dark .recharts-label,
+html.dark .recharts-legend-item-text { fill: #9aa0a6 !important; color: #9aa0a6 !important; }
+html.dark .recharts-cartesian-grid line { stroke: rgba(255, 255, 255, 0.09) !important; }
+html.dark .recharts-cartesian-axis line,
+html.dark .recharts-cartesian-axis-tick line { stroke: rgba(255, 255, 255, 0.18) !important; }
+html.dark .recharts-polar-grid-angle line,
+html.dark .recharts-polar-grid-concentric path,
+html.dark .recharts-polar-grid-concentric circle { stroke: rgba(255, 255, 255, 0.14) !important; }
+html.dark .recharts-default-tooltip {
+  background-color: #15211b !important;
+  border-color: #2a312c !important;
+  color: #e9e9ee !important;
+}
+html.dark .recharts-default-tooltip .recharts-tooltip-label,
+html.dark .recharts-default-tooltip .recharts-tooltip-item { color: #e9e9ee !important; }
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+}
+
+body {
+  font-family: var(--font-sans);
+  color: var(--color-ink);
+  background: var(--color-canvas);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* thin scrollbars for panels */
+.scroll-thin::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+.scroll-thin::-webkit-scrollbar-thumb {
+  background: #d9d9de;
+  border-radius: 8px;
+}
+
+/* G3 — пульсирующее кольцо «риск» на карте: ведёт глаз к проблемным полям */
+.risk-pulse {
+  animation: riskPulse 1.7s ease-out infinite;
+  transform-origin: center;
+  pointer-events: none;
+}
+@keyframes riskPulse {
+  0%   { stroke-opacity: 0.85; stroke-width: 2; }
+  70%  { stroke-opacity: 0;    stroke-width: 13; }
+  100% { stroke-opacity: 0;    stroke-width: 13; }
+}
+
+/* демо-тур — въезд карточки снизу */
+@keyframes tourIn {
+  0%   { opacity: 0; transform: translateY(16px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* всплывашки (toasts) — въезд справа */
+@keyframes toastIn {
+  0%   { opacity: 0; transform: translateX(20px); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+
+/* G-делайт: падение конфетти на «контракт закрыт» */
+@keyframes confettiFall {
+  0%   { opacity: 0; transform: translate(0, 0) rotate(0deg); }
+  10%  { opacity: 1; }
+  100% { opacity: 0; transform: translate(var(--dx, 0), 88vh) rotate(540deg); }
+}
+/* мягкое появление экрана при смене (fade + лёгкий подъём) */
+@keyframes screenIn {
+  0%   { opacity: 0; transform: translateY(8px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+.screen-in { animation: screenIn .26s ease-out; }
+/* плавающие частицы на экране входа */
+@keyframes loginFloat {
+  0%   { transform: translateY(0) scale(1); opacity: .0; }
+  20%  { opacity: .5; }
+  100% { transform: translateY(-120px) scale(1.3); opacity: 0; }
+}
+
+/* печать: прячем оболочку (сайдбар/шапка/плавашки), печатаем только контент */
+@media print {
+  .no-print { display: none !important; }
+  body { background: #fff !important; }
+  main { overflow: visible !important; }
+  @page { margin: 12mm; }
+}
