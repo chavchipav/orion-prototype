@@ -52,8 +52,8 @@ export function SeedMap({ fields, picked, onPick, onAssign, onClose, height = 56
   const [pulseT, setPulseT] = useState(0)
   useEffect(() => { const id = setInterval(() => setPulseT(t => (t + 0.18) % (Math.PI * 2)), 35); return () => clearInterval(id) }, [])
   const pingPhase = pulseT / (Math.PI * 2)
-  const pingRadius = 4 + pingPhase * 18
-  const pingOpacity = Math.max(0, 1 - pingPhase * 1.4)
+  const pingRadius = 4 + pingPhase * 32
+  const pingOpacity = Math.max(0, 1 - pingPhase)
   const hybrids = [...new Set(fields.map((f) => f.hybrid))]
   const centers = fields.map(centerOf)
   const focus = picked || null

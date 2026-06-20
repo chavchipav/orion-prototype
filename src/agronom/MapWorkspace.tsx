@@ -51,8 +51,8 @@ export function MapWorkspace() {
   const [pulseT, setPulseT] = useState(0)
   useEffect(() => { const id = setInterval(() => setPulseT(t => (t + 0.18) % (Math.PI * 2)), 35); return () => clearInterval(id) }, [])
   const pingPhase = pulseT / (Math.PI * 2)                    // 0..1 линейно
-  const pingRadius = 4 + pingPhase * 24                       // расширяется 4→28
-  const pingOpacity = Math.max(0, 1 - pingPhase * 1.4)        // гаснет быстрее чем расширяется
+  const pingRadius = 5 + pingPhase * 44                       // расширяется 5→49
+  const pingOpacity = Math.max(0, 1 - pingPhase)              // гаснет плавно вместе с расширением
   const fitAll = () => { const b = ringsBounds(list.map((f) => f.ring)); if (map && b) map.fitBounds(b, { padding: [60, 60] }) }
 
   const sel = AG_FIELDS.find((f) => f.id === selId) || null
@@ -102,7 +102,7 @@ export function MapWorkspace() {
               <CircleMarker key={`dot-${f.id}`} center={c} radius={5} interactive={false}
                 pathOptions={{ color: '#e5302a', weight: 2, fillColor: '#e5302a', fillOpacity: 0.7, opacity: 0.95 }} />
               <CircleMarker key={`ping-${f.id}`} center={c} radius={pingRadius} interactive={false}
-                pathOptions={{ color: '#e5302a', weight: 3, fill: false, opacity: pingOpacity }} />
+                pathOptions={{ color: '#e5302a', weight: 4, fill: false, opacity: pingOpacity }} />
             </Fragment>
           })}
           {/* внутриполевые NDVI-зоны выбранного поля (точное земледелие) */}
