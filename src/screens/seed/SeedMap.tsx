@@ -1,4 +1,4 @@
-import { useEffect, useState, type ReactNode } from 'react'
+import { useEffect, useState, Fragment, type ReactNode } from 'react'
 import type { Map as LMap } from 'leaflet'
 import { MapContainer, TileLayer, Polygon, CircleMarker, Tooltip, useMap } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css'
@@ -50,7 +50,10 @@ export function SeedMap({ fields, picked, onPick, onAssign, onClose, height = 56
   const [map, setMap] = useState<LMap | null>(null)
   const [layer, setLayer] = useState<SeedLayer>('hybrid')
   const [pulseT, setPulseT] = useState(0)
-  useEffect(() => { const id = setInterval(() => setPulseT(t => (t + 0.15) % (Math.PI * 2)), 40); return () => clearInterval(id) }, [])
+  useEffect(() => { const id = setInterval(() => setPulseT(t => (t + 0.18) % (Math.PI * 2)), 35); return () => clearInterval(id) }, [])
+  const pingPhase = pulseT / (Math.PI * 2)
+  const pingRadius = 4 + pingPhase * 18
+  const pingOpacity = Math.max(0, 1 - pingPhase * 1.4)
   const hybrids = [...new Set(fields.map((f) => f.hybrid))]
   const centers = fields.map(centerOf)
   const focus = picked || null
@@ -65,8 +68,12 @@ export function SeedMap({ fields, picked, onPick, onAssign, onClose, height = 56
 
         {/* G3: пульсирующие кольца «риск» под пинами — триаж «куда реагировать» */}
         {!focus && fields.filter((f) => f.status === 'risk').map((f) => (
-          <CircleMarker key={`pulse-${f.id}`} center={centerOf(f)} radius={14} interactive={false}
-            pathOptions={{ color: '#e5302a', weight: 4, fill: false, opacity: 0.1 + 0.9 * (0.5 + 0.5 * Math.sin(pulseT)) }} />
+          <Fragment key={f.id}>
+            <CircleMarker key={`dot-${f.id}`} center={centerOf(f)} radius={4} interactive={false}
+              pathOptions={{ color: '#e5302a', weight: 2, fillColor: '#e5302a', fillOpacity: 0.7, opacity: 0.95 }} />
+            <CircleMarker key={`ping-${f.id}`} center={centerOf(f)} radius={pingRadius} interactive={false}
+              pathOptions={{ color: '#e5302a', weight: 3, fill: false, opacity: pingOpacity }} />
+          </Fragment>
         ))}
 
         {/* ОБЗОР: пины клиентов (кроме сфокусированного) */}

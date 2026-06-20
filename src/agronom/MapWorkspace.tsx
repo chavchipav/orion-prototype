@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect, type ReactNode } from 'react'
+import { useState, useMemo, useEffect, Fragment, type ReactNode } from 'react'
 import type { Map as LMap } from 'leaflet'
 import { MapContainer, TileLayer, Polygon, Polyline, CircleMarker, Tooltip, useMap } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css'
@@ -49,8 +49,10 @@ export function MapWorkspace() {
   const [zonesOn, setZonesOn] = useState(true)
   const [map, setMap] = useState<LMap | null>(null)
   const [pulseT, setPulseT] = useState(0)
-  useEffect(() => { const id = setInterval(() => setPulseT(t => (t + 0.15) % (Math.PI * 2)), 40); return () => clearInterval(id) }, [])
-  const pulseOpacity = 0.1 + 0.9 * (0.5 + 0.5 * Math.sin(pulseT))
+  useEffect(() => { const id = setInterval(() => setPulseT(t => (t + 0.18) % (Math.PI * 2)), 35); return () => clearInterval(id) }, [])
+  const pingPhase = pulseT / (Math.PI * 2)                    // 0..1 линейно
+  const pingRadius = 4 + pingPhase * 24                       // расширяется 4→28
+  const pingOpacity = Math.max(0, 1 - pingPhase * 1.4)        // гаснет быстрее чем расширяется
   const fitAll = () => { const b = ringsBounds(list.map((f) => f.ring)); if (map && b) map.fitBounds(b, { padding: [60, 60] }) }
 
   const sel = AG_FIELDS.find((f) => f.id === selId) || null
@@ -96,7 +98,12 @@ export function MapWorkspace() {
           {/* G3: пульсирующие кольца «риск» — глаз сразу ведёт к проблемным полям */}
           {list.filter((f) => f.status === 'risk').map((f) => {
             const c: [number, number] = [f.ring.reduce((a, p) => a + p[0], 0) / f.ring.length, f.ring.reduce((a, p) => a + p[1], 0) / f.ring.length]
-            return <CircleMarker key={`pulse-${f.id}`} center={c} radius={18} interactive={false} pathOptions={{ color: '#e5302a', weight: 4, fill: false, opacity: pulseOpacity }} />
+            return <Fragment key={f.id}>
+              <CircleMarker key={`dot-${f.id}`} center={c} radius={5} interactive={false}
+                pathOptions={{ color: '#e5302a', weight: 2, fillColor: '#e5302a', fillOpacity: 0.7, opacity: 0.95 }} />
+              <CircleMarker key={`ping-${f.id}`} center={c} radius={pingRadius} interactive={false}
+                pathOptions={{ color: '#e5302a', weight: 3, fill: false, opacity: pingOpacity }} />
+            </Fragment>
           })}
           {/* внутриполевые NDVI-зоны выбранного поля (точное земледелие) */}
           {showZones && zones.map((z, i) => (
