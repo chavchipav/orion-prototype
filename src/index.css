@@ -1,5 +1,10 @@
 @import "tailwindcss";
 
+/* на мобильном уменьшаем базовый rem — все Tailwind-отступы и размеры шрифта масштабируются автоматически */
+@media (max-width: 639px) {
+  html { font-size: 14px; }
+}
+
 @theme {
   --color-brand: #fc3f1d;
   --color-brand-soft: #ffe9e4;
