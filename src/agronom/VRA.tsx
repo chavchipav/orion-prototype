@@ -86,7 +86,7 @@ export function VRA() {
         </div>
       </div>
 
-      <div className="grid grid-cols-5 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-5 gap-4">
         {/* карта зон */}
         <div className="col-span-3 relative h-[440px] rounded-2xl overflow-hidden border border-line">
           <MapContainer ref={setMap} center={AG_CENTER} zoom={14} className="absolute inset-0 h-full w-full" zoomControl={false} attributionControl={false}>
@@ -110,6 +110,7 @@ export function VRA() {
         <div className="col-span-2 space-y-4">
           <div className="bg-white border border-line rounded-2xl overflow-hidden">
             <div className="px-4 py-3 font-bold text-ink border-b border-line">Норма по зонам · {prod.name}</div>
+            <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead><tr className="text-muted text-xs border-b border-line">
                 <th className="text-left font-medium p-3">Зона</th>
@@ -134,6 +135,7 @@ export function VRA() {
                 </tr>
               </tbody>
             </table>
+            </div>
           </div>
 
           <div className={`rounded-2xl border p-4 ${saved ? 'border-ok/30 bg-ok-soft/40' : 'border-warn/30 bg-warn-soft/40'}`}>
@@ -143,7 +145,7 @@ export function VRA() {
             </div>
             <div className="text-2xl font-extrabold leading-none" style={{ color: saved ? '#2da84f' : '#e0900a' }}>{rub(Math.abs(r.saveRub))}<span className="text-sm font-semibold text-muted"> · {Math.abs(r.savePct)}%</span></div>
             <div className="text-xs text-muted mt-1">{rub(Math.abs(r.savePerHa))}/га на {field.areaHa} га · {prod.name.split(' ·')[0]}</div>
-            <div className="grid grid-cols-2 gap-2 mt-3 text-sm">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-3 text-sm">
               <div className="rounded-lg bg-white/70 p-2"><div className="text-[11px] text-muted">Равномерно</div><div className="font-bold text-ink">{rub(r.uniformCost)}</div></div>
               <div className="rounded-lg bg-white/70 p-2"><div className="text-[11px] text-muted">Дифференцированно</div><div className="font-bold text-ink">{rub(r.vraCost)}</div></div>
             </div>

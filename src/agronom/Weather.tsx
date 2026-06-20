@@ -66,7 +66,7 @@ export function Weather() {
                 </div>
               ))}
             </div>
-            <div className="mt-3 grid grid-cols-2 gap-4">
+            <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-4">
               <ChartCard title="Температура · история 14 дн">
                 <AreaChart data={HISTORY}><CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" /><XAxis dataKey="d" tick={{ fontSize: 10 }} /><YAxis tick={{ fontSize: 10 }} domain={[20, 40]} /><Tooltip /><Area type="monotone" dataKey="t" stroke="#e0900a" fill="#fdf0d8" strokeWidth={2} isAnimationActive={false} /></AreaChart>
               </ChartCard>
@@ -83,6 +83,7 @@ export function Weather() {
         <div className="space-y-4">
           <Info>Окно опрыскивания по <b>Delta T</b> (сухой − влажный термометр): <b>2–8</b> — идеально; <b>&lt;2</b> — высокая влажность, риск инверсии/сноса; <b>&gt;10</b> — капля пересыхает. Плюс ветер ≤5 м/с и отсутствие осадков. Эти же правила питают <button onClick={() => go('agPlanner')} className="text-brand font-semibold hover:underline">Планировщик</button>.</Info>
           <div className="rounded-2xl bg-white border border-line overflow-hidden">
+            <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead><tr className="text-muted text-xs border-b border-line bg-canvas/50"><th className="text-left font-medium p-2.5">День</th><th className="text-right font-medium p-2.5">ΔT</th><th className="text-right font-medium p-2.5">Ветер</th><th className="text-right font-medium p-2.5">Влажн.</th><th className="text-left font-medium p-2.5">Ночь</th><th className="text-left font-medium p-2.5">Окно</th></tr></thead>
               <tbody>
@@ -98,6 +99,7 @@ export function Weather() {
                 )})}
               </tbody>
             </table>
+            </div>
           </div>
         </div>
       )}
@@ -198,7 +200,7 @@ export function Weather() {
             <Stat v={`${ANOMALY.rainPct}%`} l="осадки к норме (суше)" accent />
             <Stat v={`${ANOMALY.gtk}`} l="ГТК Селянинова (<0.5 — засуха)" accent />
           </div>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="rounded-2xl bg-white border border-line p-5">
               <div className="font-bold text-ink mb-3">Температура: сезон vs климат-норма</div>
               <div className="h-56"><ResponsiveContainer width="100%" height="100%"><LineChart data={MONTHLY}><CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" /><XAxis dataKey="m" tick={{ fontSize: 11 }} /><YAxis tick={{ fontSize: 11 }} /><Tooltip /><Legend /><Line dataKey="tFact" name="Факт, °C" stroke="#e0900a" strokeWidth={2.5} isAnimationActive={false} /><Line dataKey="tNorm" name="Норма, °C" stroke="#9a9a9a" strokeWidth={2} strokeDasharray="5 4" isAnimationActive={false} /></LineChart></ResponsiveContainer></div>

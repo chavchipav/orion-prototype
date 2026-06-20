@@ -23,7 +23,7 @@ export function Catalog() {
         Мои предложения
       </SectionTitle>
 
-      <div className="grid grid-cols-3 gap-3 mb-4">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-4">
         <Card><Stat value={String(CATALOG.length)} label="гибридов в каталоге" /></Card>
         <Card><Stat value={String(offers.length)} label="опубликовано предложений" /></Card>
         <Card><Stat value={String(newRequestCount)} label="новых заявок от агрономов" accent /></Card>
@@ -50,6 +50,7 @@ function CatalogTab() {
         {(['Подсолнечник', 'Кукуруза'] as Crop[]).map((c) => <button key={c} onClick={() => setCrop(c)} className={`px-3.5 py-2 rounded-lg text-sm font-semibold ${crop === c ? 'bg-brand text-white' : 'text-muted hover:text-ink'}`}>{c}</button>)}
       </div>
       <Card pad={false} className="overflow-hidden">
+        <div className="overflow-x-auto">
         <table className="w-full text-sm">
           <thead><tr className="text-muted text-xs border-b border-line">
             <th className="text-left font-medium p-3">Гибрид · бренд</th>
@@ -77,6 +78,7 @@ function CatalogTab() {
             })}
           </tbody>
         </table>
+        </div>
       </Card>
       {open && <HybridModal h={open} onClose={() => setOpen(null)} />}
     </div>
@@ -106,6 +108,7 @@ function HybridModal({ h, onClose }: { h: CatalogHybrid; onClose: () => void }) 
         </div>
 
         <div className="font-semibold text-ink mb-1">Полевые испытания</div>
+        <div className="overflow-x-auto">
         <table className="w-full text-xs">
           <thead><tr className="text-muted border-b border-line"><th className="text-left font-medium py-1.5">Регион · год</th><th className="text-right font-medium">Урожай</th><th className="text-right font-medium">vs контроль</th><th className="text-right font-medium">Поля</th></tr></thead>
           <tbody>
@@ -119,6 +122,7 @@ function HybridModal({ h, onClose }: { h: CatalogHybrid; onClose: () => void }) 
             ))}
           </tbody>
         </table>
+        </div>
         <p className="text-[11px] text-muted mt-2">Опубликованные гибриды видны агроному в «Маркетплейсе» для соответствующего региона.</p>
         <div className="mt-4 pt-4 border-t border-line"><Reviews id={h.id} kind="seed" /></div>
       </div>
@@ -140,7 +144,7 @@ function OfferTab() {
   const publish = () => { if (!sel.length) return; publishOffer({ crop, region, hybridIds: sel, pricePerPU: parseInt(price) || 0, discountPct: parseInt(discount) || 0, riskShare: risk }); setSel([]) }
 
   return (
-    <div className="grid grid-cols-2 gap-4">
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
       <Card>
         <div className="font-bold text-ink mb-3">Сформировать предложение</div>
         <div className="grid grid-cols-2 gap-2 mb-3">

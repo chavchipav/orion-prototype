@@ -85,7 +85,7 @@ export function ClientFields() {
       <Tabs active={tab} onChange={setTab} tabs={[{ key: 'map', label: 'Карта полей' }, { key: 'support', label: `Сопровождение · ${tasks.filter((t) => t.status !== 'закрыта').length}` }]} />
 
       {tab === 'map' && (
-        <div className="grid grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
           <div className="col-span-2 space-y-4">
             <div className="flex gap-2">
               <select value={fHybrid} onChange={(e) => setFHybrid(e.target.value)} className="px-3 py-2 rounded-xl bg-white border border-line text-sm">
@@ -144,7 +144,7 @@ export function ClientFields() {
           <span className="w-9 h-9 rounded-xl bg-brand/15 text-brand grid place-items-center shrink-0"><Sprout size={18} /></span>
           <div className="text-sm text-ink flex-1">Сопровождение идёт <b>под брендом Genesis · «Дружные всходы»</b> — выезды, задачи и контент по моим гибридам атрибутированы мне, а не растворяются в платформе. Это моя услуга и мой бренд.</div>
         </div>
-        <div className="grid grid-cols-2 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
           <div>
             <div className="font-bold text-ink mb-3">Алерты по полям → назначить агронома</div>
             <div className="space-y-2">

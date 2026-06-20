@@ -31,7 +31,7 @@ export function SeedWarehouse() {
         Склад готовой продукции
       </SectionTitle>
 
-      <div className="grid grid-cols-4 gap-4 mb-5">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-5">
         <Card><Stat value={totalOnHand.toLocaleString('ru-RU')} label="на складе, п.е. (с переходящим)" /></Card>
         <Card><Stat value={totalReserved.toLocaleString('ru-RU')} label="зарезервировано под контракты" /></Card>
         <Card><Stat value={totalFree.toLocaleString('ru-RU')} label="свободно к продаже, п.е." accent /></Card>
@@ -41,6 +41,7 @@ export function SeedWarehouse() {
       {/* баланс по гибридам */}
       <Card pad={false} className="overflow-hidden mb-5">
         <div className="p-4 font-bold text-ink">Баланс по гибридам</div>
+        <div className="overflow-x-auto">
         <table className="w-full text-sm">
           <thead><tr className="text-muted text-xs border-b border-line">
             <th className="text-left font-medium p-3">Гибрид</th>
@@ -66,6 +67,7 @@ export function SeedWarehouse() {
             })}
           </tbody>
         </table>
+        </div>
       </Card>
 
       {!!shortHybrids.length && (
@@ -78,6 +80,7 @@ export function SeedWarehouse() {
       {/* партии */}
       <Card pad={false} className="overflow-hidden">
         <div className="p-4 font-bold text-ink">Партии на складе</div>
+        <div className="overflow-x-auto">
         <table className="w-full text-sm">
           <thead><tr className="text-muted text-xs border-b border-line">
             <th className="text-left font-medium p-3">Партия</th>
@@ -98,6 +101,7 @@ export function SeedWarehouse() {
             ))}
           </tbody>
         </table>
+        </div>
       </Card>
     </div>
   )

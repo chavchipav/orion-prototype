@@ -51,7 +51,7 @@ export function Techcards() {
             </button>
           ))}
         </div>
-        <div className="p-3 border-t border-line grid grid-cols-3 gap-2">
+        <div className="p-3 border-t border-line grid grid-cols-1 sm:grid-cols-3 gap-2">
           <Act icon={<Copy size={14} />} l="Копировать" /><Act icon={<CheckCircle2 size={14} />} l="Назначить" primary /><Act icon={<X size={14} />} l="Снять" />
         </div>
       </aside>

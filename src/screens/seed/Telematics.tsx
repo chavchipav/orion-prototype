@@ -49,7 +49,7 @@ export function SeedTelematics() {
         Контроль закладки демо
       </SectionTitle>
 
-      <div className="grid grid-cols-4 gap-4 mb-5">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-5">
         <Card><Stat value={rows.length} label="демо под контролем" /></Card>
         <Card><Stat value={valid} label="заложены по протоколу (валидны)" /></Card>
         <Card><Stat value={flagged} label="требуют проверки" accent /></Card>
@@ -58,6 +58,7 @@ export function SeedTelematics() {
 
       <Card pad={false} className="overflow-hidden mb-5">
         <div className="p-4 font-bold text-ink">Закладка демо · данные телематики клиента</div>
+        <div className="overflow-x-auto">
         <table className="w-full text-sm">
           <thead><tr className="text-muted text-xs border-b border-line">
             <th className="text-left font-medium p-3">Демо · гибрид</th>
@@ -82,6 +83,7 @@ export function SeedTelematics() {
             ))}
           </tbody>
         </table>
+        </div>
       </Card>
 
       <div className="rounded-2xl border border-ok/30 bg-ok-soft/40 p-4 flex items-start gap-3">

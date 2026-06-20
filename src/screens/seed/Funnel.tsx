@@ -71,7 +71,7 @@ function AccountsTab() {
 
   return (
     <div>
-      <div className="grid grid-cols-4 gap-4 mb-4">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-4">
         <Card><Stat value={<CountUp value={sun} />} label="хозяйств сеют подсолнечник" /></Card>
         <Card><Stat value={<CountUp value={accounts.length} />} label="всего в базе (вкл. реестр)" /></Card>
         <Card><Stat value={<CountUp value={engaged.size} />} label="в работе" accent /></Card>
@@ -97,6 +97,7 @@ function AccountsTab() {
       <p className="text-[11px] text-muted mb-3">Источник площади помечен честно: «заявка хозяйства» / «оценка по NDVI» / «реестр (груб. оценка)». Реестр госкомпаний — это юрлица, не подсолнечные хозяйства (фильтр «Сеет подсолнечник» их скрывает).</p>
 
       <Card pad={false} className="overflow-hidden">
+        <div className="overflow-x-auto">
         <table className="w-full text-sm">
           <thead><tr className="text-muted text-xs border-b border-line">
             <th className="text-left font-medium p-3">Компания · согласие</th>
@@ -140,6 +141,7 @@ function AccountsTab() {
             })}
           </tbody>
         </table>
+        </div>
       </Card>
       {list.length > 40 && <p className="text-xs text-muted mt-2">Показаны первые 40 из {list.length}. Уточните фильтр.</p>}
     </div>
@@ -206,7 +208,7 @@ function ContactsTab() {
   const { contacts, tasks, accounts, setContactStatus, setTaskStatus, addSalesTask } = useCrm()
   const acc = (id: string) => accounts.find((a) => a.id === id)
   return (
-    <div className="grid grid-cols-2 gap-5">
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
       <div>
         <div className="font-bold text-ink mb-3">Контакты · кому когда вернуться</div>
         <div className="space-y-2">
@@ -273,13 +275,13 @@ function FunnelTab() {
   const stageSum = (st: LeadStage) => leads.filter((l) => l.stage === st).reduce((s, l) => s + dealValue(l.hybrid, l.areaHa), 0)
   return (
     <div>
-      <div className="grid grid-cols-4 gap-4 mb-5">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-5">
         <Card><Stat value={<CountUp value={leads.length} />} label="сделок в работе" /></Card>
         <Card><Stat value={<CountUp value={pipeline / 1_000_000} decimals={1} suffix=" млн ₽" />} label="сумма воронки (потолок)" /></Card>
         <Card><Stat value={<CountUp value={forecast / 1_000_000} decimals={1} suffix=" млн ₽" />} label="взвешенный прогноз сезона" accent /></Card>
         <Card><Stat value={<CountUp value={conv} suffix="%" />} label="конверсия лид → контракт" /></Card>
       </div>
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         {STAGES.map((st) => {
           const items = leads.filter((l) => l.stage === st.key)
           return (
@@ -329,6 +331,7 @@ function ChannelsTab() {
   return (
     <Card pad={false} className="overflow-hidden">
       <div className="p-4 font-bold text-ink">Каналы привлечения · конверсия лид → контракт</div>
+      <div className="overflow-x-auto">
       <table className="w-full text-sm">
         <thead><tr className="text-muted text-xs border-b border-line">
           <th className="text-left font-medium p-3">Канал</th><th className="text-left font-medium p-3 w-1/3">Лиды</th>
@@ -346,6 +349,7 @@ function ChannelsTab() {
           ))}
         </tbody>
       </table>
+      </div>
     </Card>
   )
 }
@@ -360,13 +364,14 @@ function BudgetTab() {
   const totalLeads = budget.reduce((s, b) => s + leadsBy(b.channel), 0)
   return (
     <div>
-      <div className="grid grid-cols-4 gap-4 mb-4">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-4">
         <Card><Stat value={money(totalPlan)} label="план привлечения" /></Card>
         <Card><Stat value={money(totalSpent)} label="израсходовано" /></Card>
         <Card><Stat value={totalLeads} label="лидов привлечено" /></Card>
         <Card><Stat value={totalLeads ? money(Math.round(totalSpent / totalLeads)) : '—'} label="средний CAC / лид" accent /></Card>
       </div>
       <Card pad={false} className="overflow-hidden">
+        <div className="overflow-x-auto">
         <table className="w-full text-sm">
           <thead><tr className="text-muted text-xs border-b border-line">
             <th className="text-left font-medium p-3">Канал</th><th className="text-right font-medium p-3">План, ₽</th><th className="text-right font-medium p-3">Факт, ₽</th>
@@ -390,6 +395,7 @@ function BudgetTab() {
             })}
           </tbody>
         </table>
+        </div>
       </Card>
       <div className="rounded-2xl border border-sky/30 bg-sky-soft/30 p-4 mt-4 flex items-center gap-3 text-sm text-ink">
         <TrendingUp size={18} className="text-sky shrink-0" />

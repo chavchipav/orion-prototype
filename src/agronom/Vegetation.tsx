@@ -64,6 +64,7 @@ export function Vegetation() {
 
       <div className="bg-white border border-line rounded-2xl overflow-hidden">
         <div className="px-5 py-3 font-bold text-ink border-b border-line flex items-center justify-between">Аналитическая таблица вегетации<span className="text-xs font-normal text-muted">клик по полю → сезон в деталях</span></div>
+        <div className="overflow-x-auto">
         <table className="w-full text-sm">
           <thead><tr className="text-muted text-xs border-b border-line">
             <th className="text-left font-medium p-3">Поле</th><th className="text-left font-medium p-3">Культура</th>
@@ -106,6 +107,7 @@ export function Vegetation() {
             })}
           </tbody>
         </table>
+        </div>
       </div>
       {open && <Chronology field={open} onClose={() => setOpen(null)} />}
     </div>

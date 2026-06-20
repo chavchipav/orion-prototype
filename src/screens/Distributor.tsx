@@ -27,7 +27,7 @@ export function Distributor() {
         Кабинет дистрибьютора · входы по Югу
       </SectionTitle>
 
-      <div className="grid grid-cols-4 gap-3 mb-5">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-5">
         <Card><Stat value={<CountUp value={newCount} />} label="новых заявок из маркетплейса" accent /></Card>
         <Card><Stat value={<CountUp value={inWork} />} label="в работе" /></Card>
         <Card><Stat value="60+" label="хозяйств в работе" /></Card>
@@ -45,6 +45,7 @@ export function Distributor() {
 
       <Card className="mb-5">
         <div className="font-bold text-ink mb-3">Ваши хозяйства и лиды</div>
+        <div className="overflow-x-auto">
         <table className="w-full text-sm">
           <thead><tr className="text-muted text-xs"><th className="text-left font-medium pb-2">Хозяйство</th><th className="text-left font-medium pb-2">Площадь</th><th className="text-left font-medium pb-2">Потребность</th><th className="text-left font-medium pb-2">Статус</th></tr></thead>
           <tbody>
@@ -58,6 +59,7 @@ export function Distributor() {
             ))}
           </tbody>
         </table>
+        </div>
       </Card>
 
       {/* финтех-отсрочка — ваш инструмент (U7) */}
@@ -66,6 +68,7 @@ export function Distributor() {
           <div className="font-bold text-ink flex items-center gap-2"><Wallet size={17} className="text-brand" />Финтех · товарная отсрочка под скоринг поля</div>
           <span className="text-xs text-muted">скоринг = NDVI-история + кадастр · вы кредитуете дешевле и безопаснее</span>
         </div>
+        <div className="overflow-x-auto">
         <table className="w-full text-sm">
           <thead><tr className="text-muted text-xs border-b border-line">
             <th className="text-left font-medium p-3">Хозяйство</th><th className="text-right font-medium p-3">Площадь</th>
@@ -90,6 +93,7 @@ export function Distributor() {
             })}
           </tbody>
         </table>
+        </div>
         <div className="px-4 py-2 text-[11px] text-muted">Платформа берёт take со скоринга/страховки, не с вашей товарной маржи. Обеспечение — будущий урожай поля (риск-данные).</div>
       </Card>
 

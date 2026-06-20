@@ -48,7 +48,7 @@ export function Production() {
         Производство · размножение F1
       </SectionTitle>
 
-      <div className="grid grid-cols-4 gap-4 mb-5">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-5">
         <Card><Stat value={`${totalPlan} га`} label="план размножения" /></Card>
         <Card><Stat value={`${totalCap} га`} label="мощность участков" /></Card>
         <Card><Stat value={totalCarry.toLocaleString('ru-RU')} label="переходящий остаток, п.е." /></Card>
@@ -91,7 +91,7 @@ export function Production() {
         </div>
       </Card>
 
-      <div className="grid grid-cols-2 gap-4 mb-5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-5">
         <Card>
           <div className="font-bold text-ink mb-3">План vs мощность по гибридам, га</div>
           <div className="h-56">
@@ -126,6 +126,7 @@ export function Production() {
       {/* участки гибридизации */}
       <Card pad={false} className="overflow-hidden mb-5">
         <div className="p-4 font-bold text-ink">Участки гибридизации · сезон 2026</div>
+        <div className="overflow-x-auto">
         <table className="w-full text-sm">
           <thead><tr className="text-muted text-xs border-b border-line">
             <th className="text-left font-medium p-3">Участок · регион</th>
@@ -148,11 +149,13 @@ export function Production() {
             ))}
           </tbody>
         </table>
+        </div>
       </Card>
 
       <CertChain />
 
       <Card pad={false} className="overflow-hidden">
+        <div className="overflow-x-auto">
         <table className="w-full text-sm">
           <thead><tr className="text-muted text-xs border-b border-line">
             <th className="text-left font-medium p-3">Гибрид</th>
@@ -175,6 +178,7 @@ export function Production() {
             ))}
           </tbody>
         </table>
+        </div>
       </Card>
       <p className="text-xs text-muted mt-3">«Орион-С» — спрос покрыт по п.е., но участков не хватает ({rows.find((r) => r.hybrid === 'Орион-С')?.capDeficit} га дефицита): главная R&D-ставка упирается в мощности размножения.</p>
     </div>

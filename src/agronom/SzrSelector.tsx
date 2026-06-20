@@ -52,7 +52,7 @@ export function SzrSelector() {
               <div className="mt-5">
                 <div className="text-lg font-semibold text-ink mb-1">{TITLE.markers}</div>
                 <div className="text-xs text-muted mb-3">Отметьте, что нужно контролировать (можно несколько) — подберём продукт под спектр.</div>
-                <div className="grid grid-cols-2 gap-2 max-w-2xl">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 max-w-2xl">
                   {(ans.type ? SZR_MARKERS[ans.type] : []).map((m) => (
                     <label key={m} className={`flex items-center gap-2 px-3 py-2.5 rounded-xl border text-sm cursor-pointer ${ans.markers.includes(m) ? 'border-brand bg-brand-soft/40' : 'border-line hover:border-brand/50'}`}>
                       <input type="checkbox" checked={ans.markers.includes(m)} onChange={() => toggleMarker(m)} className="accent-brand" />{m}
@@ -96,7 +96,7 @@ function CropPick({ onPick }: { onPick: (c: string) => void }) {
       <div className="bg-white border border-line rounded-2xl shadow-sm max-w-3xl mx-auto p-8">
         <h2 className="text-xl font-bold text-ink mb-1">Подбор СЗР</h2>
         <p className="text-sm text-muted mb-6">Подберите эффективное средство защиты под культуру, фазу и спектр проблем — на основе полевых опытов.</p>
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           {SZR_CROPS.map((c) => (
             <button key={c} onClick={() => onPick(c)} className="group rounded-2xl border border-line hover:border-brand p-5 text-left transition">
               <div className="w-11 h-11 rounded-xl grid place-items-center mb-3" style={{ background: CROP_TINT[c] + '22', color: CROP_TINT[c] }}><FlaskConical size={22} /></div>
@@ -204,6 +204,7 @@ function Passport({ p, crop, onClose, onVideo }: { p: SzrProduct; crop: string; 
           {/* результаты опытов */}
           <div className="text-sm font-semibold text-ink mb-2">Результаты полевых опытов</div>
           <div className="rounded-xl border border-line overflow-hidden mb-3">
+            <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead><tr className="text-muted text-xs border-b border-line bg-canvas/50"><th className="text-left font-medium p-2">Регион · год · культура</th><th className="text-right font-medium p-2">Продукт</th><th className="text-right font-medium p-2">Контроль</th><th className="text-right font-medium p-2">Прибавка</th><th className="text-left font-medium p-2 pl-3">Условия</th></tr></thead>
               <tbody>
@@ -218,6 +219,7 @@ function Passport({ p, crop, onClose, onVideo }: { p: SzrProduct; crop: string; 
                 ))}
               </tbody>
             </table>
+            </div>
           </div>
 
           {/* фотоотчёт */}

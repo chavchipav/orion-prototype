@@ -19,14 +19,14 @@ export function OwnerAIReport() {
         <p className="text-sm text-muted mt-0.5">Сколько рекомендаций дано, что выполнено, прогресс по цифровому двойнику</p>
       </div>
 
-      <div className="grid grid-cols-4 gap-3 mb-4">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4">
         <Kpi v="47" l="рекомендаций за сезон" />
         <Kpi v="38" l="отмечено выполненными" accent />
         <Kpi v="81%" l="выполнение рекомендаций" />
         <Kpi v="92%" l="полей оцифровано" />
       </div>
 
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <Card className="p-5">
           <div className="font-bold text-ink mb-3">Выполнение рекомендаций по месяцам</div>
           <div className="h-44 flex items-end gap-3">

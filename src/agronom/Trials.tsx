@@ -39,7 +39,7 @@ export function Trials() {
         ))}
       </div>
 
-      <div className="grid grid-cols-3 gap-5">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
         {/* левая колонка: дизайн + делянки */}
         <div className="col-span-2 space-y-4">
           <div className="rounded-2xl bg-white border border-line p-4">
@@ -72,7 +72,7 @@ export function Trials() {
           </div>
 
           {/* средние по уровням */}
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <LevelBars title={t.factorA.name} rows={res.meansA} max={maxA} best={res.bestA} />
             <LevelBars title={t.factorB.name} rows={res.meansB} max={maxB} best={res.bestB} />
           </div>

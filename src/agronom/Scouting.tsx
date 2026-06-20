@@ -38,7 +38,7 @@ export function Scouting() {
         <button className="flex items-center gap-1.5 bg-ink text-white rounded-xl px-4 py-2.5 text-sm font-semibold"><Filter size={15} />Показать на карте</button>
       </div>
 
-      <div className="grid grid-cols-4 gap-3 mb-4">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4">
         <Kpi v={String(issues.length)} l="осмотров с проблемой" />
         <Kpi v={String(alarms)} l="требуют решения" accent />
         <Kpi v={String(issues.filter((i) => i.status === 'обработка').length)} l="в обработке" />
@@ -46,6 +46,7 @@ export function Scouting() {
       </div>
 
       <div className="bg-white border border-line rounded-2xl overflow-hidden">
+        <div className="overflow-x-auto">
         <table className="w-full text-sm">
           <thead><tr className="text-muted text-xs border-b border-line">
             <th className="text-left font-medium p-3">Поле · культура</th>
@@ -72,6 +73,7 @@ export function Scouting() {
             })}
           </tbody>
         </table>
+        </div>
       </div>
 
       {openId && <IssueCard id={openId} onClose={() => setOpenId(null)} />}

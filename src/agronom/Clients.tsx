@@ -44,7 +44,7 @@ export function Clients() {
         <button className="flex items-center gap-1.5 bg-brand text-white rounded-xl px-4 py-2.5 text-sm font-semibold"><Plus size={16} />Подключить хозяйство</button>
       </div>
 
-      <div className="grid grid-cols-4 gap-3 mb-4">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4">
         <Kpi v={String(AG_CLIENTS.length)} l="хозяйств" />
         <Kpi v={`${total.toLocaleString('ru-RU')} га`} l="под управлением" />
         <Kpi v={String(AG_CLIENTS.filter((c) => c.role === 'Своё').length)} l="своих · остальные консультирую" />
@@ -52,6 +52,7 @@ export function Clients() {
       </div>
 
       <div className="bg-white border border-line rounded-2xl overflow-hidden max-w-4xl">
+        <div className="overflow-x-auto">
         <table className="w-full text-sm">
           <thead><tr className="text-muted text-xs border-b border-line">
             <th className="text-left font-medium p-3">Хозяйство</th><th className="text-left font-medium p-3">Регион</th>
@@ -75,6 +76,7 @@ export function Clients() {
             })}
           </tbody>
         </table>
+        </div>
       </div>
 
       {open && <FarmModal c={open} ownIssues={ownOpen} onClose={() => setOpen(null)} go={go} />}
@@ -109,6 +111,7 @@ function FarmModal({ c, ownIssues, onClose, go }: { c: Client; ownIssues: Return
           <div className="text-sm font-semibold text-ink mb-2 flex items-center gap-1.5"><AlertTriangle size={15} className="text-warn" />Поля, требующие внимания</div>
           {farmIssues.length ? (
             <div className="rounded-xl border border-line overflow-hidden mb-4">
+              <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <tbody>
                   {farmIssues.map((x, i) => (
@@ -121,6 +124,7 @@ function FarmModal({ c, ownIssues, onClose, go }: { c: Client; ownIssues: Return
                   ))}
                 </tbody>
               </table>
+              </div>
             </div>
           ) : <div className="rounded-xl bg-ok-soft/40 text-ok text-sm font-semibold px-3 py-2 mb-4">Все поля в норме — открытых проблем нет.</div>}
 

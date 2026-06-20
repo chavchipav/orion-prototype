@@ -29,7 +29,7 @@ export function Works() {
         </div>
       </div>
 
-      <div className="grid grid-cols-4 gap-3 mb-4">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4">
         <Kpi v={String(rows.filter((r) => r.status === 'План').length)} l="план" />
         <Kpi v={String(rows.filter((r) => r.status === 'В работе').length)} l="в работе" accent />
         <Kpi v={String(rows.filter((r) => r.status === 'Факт').length)} l="факт" />
@@ -37,6 +37,7 @@ export function Works() {
       </div>
 
       <div className="bg-white border border-line rounded-2xl overflow-hidden">
+        <div className="overflow-x-auto">
         <table className="w-full text-sm">
           <thead><tr className="text-muted text-xs border-b border-line">
             <th className="p-3 w-8"><input type="checkbox" checked={all} onChange={() => setSel(all ? new Set() : new Set(rows.map((r) => r.id)))} /></th>
@@ -58,6 +59,7 @@ export function Works() {
             ))}
           </tbody>
         </table>
+        </div>
       </div>
       <p className="text-xs text-muted mt-3">Работы со <span className="text-brand font-semibold">связью</span> — обработки по проблемам: отметка «Факт» закрывает проблему в осмотрах и рекомендациях.</p>
     </div>

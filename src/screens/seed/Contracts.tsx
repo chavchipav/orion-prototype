@@ -45,7 +45,7 @@ export function Contracts() {
         Контракты · партии
       </SectionTitle>
 
-      <div className="grid grid-cols-4 gap-4 mb-5">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-5">
         <Card><Stat value={<CountUp value={agg.total / 1_000_000} decimals={2} suffix=" млн ₽" />} label={`законтрактовано · ${contracts.length} сделки`} /></Card>
         <Card><Stat value={<CountUp value={agg.prepaid / 1_000_000} decimals={2} suffix=" млн ₽" />} label="авансы получено (60%)" /></Card>
         <Card><Stat value={<CountUp value={agg.remaining / 1_000_000} decimals={2} suffix=" млн ₽" />} label="доплата по факту (прогноз)" accent /></Card>
@@ -56,6 +56,7 @@ export function Contracts() {
 
       {tab === 'rs' && (
         <Card pad={false} className="overflow-hidden">
+          <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead><tr className="text-muted text-xs border-b border-line">
               <th className="text-left font-medium p-3">Хозяйство · гибрид</th>
@@ -91,6 +92,7 @@ export function Contracts() {
               })}
             </tbody>
           </table>
+        </div>
         </Card>
       )}
 
@@ -102,7 +104,7 @@ export function Contracts() {
       )}
 
       {tab === 'lots' && (
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {lots.map((l) => (
             <Card key={l.id} className="flex items-center gap-4">
               {/* штрих-код партии (прослеживаемость) */}

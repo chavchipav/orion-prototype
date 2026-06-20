@@ -37,7 +37,7 @@ export function Nutrition() {
         </div>
       </div>
 
-      <div className="grid grid-cols-5 gap-3 mb-4">
+      <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 mb-4">
         <Kpi v={`${Math.round(physT)} т`} l="внесено (физ. вес)" />
         <Kpi v={`${Math.round(nT)} т`} l={`азот N · ${area ? Math.round(nT * 1000 / area) : 0} кг/га`} accent />
         <Kpi v={`${Math.round(pT)} т`} l={`фосфор P₂O₅ · ${area ? Math.round(pT * 1000 / area) : 0} кг/га`} />
@@ -45,7 +45,7 @@ export function Nutrition() {
         <Kpi v={rub(cost)} l={`затраты · ${fields} полей`} />
       </div>
 
-      <div className="grid grid-cols-2 gap-4 mb-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
         <div className="bg-white border border-line rounded-2xl p-5">
           <div className="font-bold text-ink mb-3">Внесение по продуктам, т</div>
           <div className="h-60">
@@ -72,6 +72,7 @@ export function Nutrition() {
 
       <div className="bg-white border border-line rounded-2xl overflow-hidden">
         <div className="px-5 py-3 font-bold text-ink border-b border-line">Журнал внесения · {log.length} операций</div>
+        <div className="overflow-x-auto">
         <table className="w-full text-sm">
           <thead><tr className="text-muted text-xs border-b border-line">
             <th className="text-left font-medium p-3">Поле · культура</th><th className="text-left font-medium p-3">Удобрение</th><th className="text-left font-medium p-3">Фаза</th>
@@ -82,6 +83,7 @@ export function Nutrition() {
             {log.map((a) => <Row key={a.id} a={a} />)}
           </tbody>
         </table>
+        </div>
       </div>
     </div>
   )

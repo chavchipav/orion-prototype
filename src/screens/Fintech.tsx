@@ -29,13 +29,13 @@ function BankView() {
         Риск-данные для банка / страховщика
       </SectionTitle>
 
-      <div className="grid grid-cols-3 gap-4 mb-5">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-5">
         <Card><Stat value="поле↔кадастр↔юрлицо" label="привязка для скоринга" /></Card>
         <Card><Stat value="3 сезона" label="история урожайности залога" /></Card>
         <Card><Stat value="ед. млрд ₽/год" label="пул институтов (РФ)" accent /></Card>
       </div>
 
-      <div className="grid grid-cols-2 gap-5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
         <Card>
           <div className="font-bold text-ink mb-2">Что даём институту</div>
           <ul className="text-sm text-muted space-y-2">
@@ -51,7 +51,7 @@ function BankView() {
       </div>
 
       {/* контур верификации залога (U8) */}
-      <div className="grid grid-cols-3 gap-5 mt-5">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 mt-5">
         <Card className="col-span-1">
           <div className="font-bold text-ink mb-2">Контур верификации (статус)</div>
           <div className="space-y-1.5">
@@ -65,6 +65,7 @@ function BankView() {
         </Card>
         <Card pad={false} className="col-span-2 overflow-hidden">
           <div className="p-4 pb-2 font-bold text-ink">Привязка залоговых полей · ЕГРН ↔ право ↔ ИНН</div>
+          <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead><tr className="text-muted text-xs border-b border-line">
               <th className="text-left font-medium p-3">Хозяйство</th><th className="text-left font-medium p-3">Кадастр (ЕГРН)</th>
@@ -82,6 +83,7 @@ function BankView() {
               ))}
             </tbody>
           </table>
+          </div>
           <div className="px-4 py-2 text-[11px] text-muted">Демо-данные. Для решения нужен реальный ЕГРН↔Росреестр↔ИНН по всему пулу + валидация прогноз/факт на истории.</div>
         </Card>
       </div>
@@ -105,7 +107,7 @@ function OwnerView() {
       <SectionTitle sub="Финансирование закупок и страхование урожая на основе данных поля">
         Финтех · страховка
       </SectionTitle>
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <Card><div className="flex items-center gap-2 mb-1"><Icon name="ShieldCheck" size={18} className="text-brand" /><span className="font-bold text-ink">Параметрическая страховка</span></div><p className="text-sm text-muted">Выплата по факту засухи/НДВ без долгих экспертиз.</p></Card>
         <Card><div className="flex items-center gap-2 mb-1"><Icon name="Landmark" size={18} className="text-brand" /><span className="font-bold text-ink">Финансирование закупок</span></div><p className="text-sm text-muted">Отсрочка под скоринг поля — в т.ч. через вашего дистрибьютора.</p></Card>
         <Card><div className="flex items-center gap-2 mb-1"><Icon name="Wallet" size={18} className="text-brand" /><span className="font-bold text-ink">Скоринг хозяйства</span></div><p className="text-sm text-muted">История поля = более дешёвый кредит.</p></Card>

@@ -22,14 +22,14 @@ export function SeedDashboard() {
         Главная
       </SectionTitle>
 
-      <div className="grid grid-cols-4 gap-4 mb-5">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-5">
         <Card><Stat value={<CountUp value={soldPU} />} label="продано посевных единиц" /></Card>
         <Card><Stat value={<CountUp value={activeDemos} />} label="активных демопосевов" /></Card>
         <Card><Stat value={<CountUp value={conv} suffix="%" />} label="конверсия демо → контракт" accent /></Card>
         <Card><Stat value={avgYield === '—' ? '—' : <CountUp value={Number(avgYield)} decimals={1} suffix=" т/га" />} label="средний результат в поле" /></Card>
       </div>
 
-      <div className="grid grid-cols-3 gap-5">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
         {/* Поля под риском */}
         <Card className="col-span-2">
           <div className="flex items-center justify-between mb-3">

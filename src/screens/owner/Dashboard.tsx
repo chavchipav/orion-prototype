@@ -39,14 +39,14 @@ export function OwnerDashboard() {
         <p className="text-sm text-muted mt-0.5">Где мы в сезоне · план по урожаю · что в работе · что ждёт вашего решения</p>
       </div>
 
-      <div className="grid grid-cols-4 gap-3 mb-4">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4">
         <Kpi v={<CountUp value={68} suffix="%" />} l="сезон пройден" />
         <Kpi v={<CountUp value={20050} suffix=" т" />} l="прогноз сбора" accent />
         <Kpi v={<CountUp value={142} />} l="действий выполнено" />
         <Kpi v={<CountUp value={pendingCount} />} l="ждут согласования" />
       </div>
 
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <div className="col-span-2 space-y-4">
           {/* где мы в сезоне */}
           <Card className="p-5">

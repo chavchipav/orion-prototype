@@ -47,7 +47,7 @@ export function RnD() {
       </div>
 
       {/* профиль по зонам */}
-      <div className="grid grid-cols-2 gap-4 mb-5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-5">
         {stats.map((s) => <ZoneCard key={s.zone} s={s} drought={h.drought} onDrill={() => setDrill({ hybrid: h.name, zone: s.zone })} />)}
       </div>
 
@@ -115,7 +115,7 @@ function Backtest() {
         <Pill tone="sky">{bt.coverageSeasons} сезона истории</Pill>
       </div>
       <p className="text-xs text-muted mb-3">Валидация оценки урожайности против фактического намолота на завершённых полях — без неё цифра «проверено полем» недоказательна (и банк не возьмёт под скоринг).</p>
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <div className="col-span-1 space-y-2">
           <div className="rounded-xl bg-canvas p-3"><div className="text-2xl font-extrabold text-ink">{bt.mape}%</div><div className="text-[11px] text-muted">MAPE (средняя ошибка) · MAE {bt.mae} т/га · n={bt.n}</div></div>
           <div className="rounded-xl bg-canvas p-3"><div className="text-2xl font-extrabold text-ink">{bt.ndviCorr}</div><div className="text-[11px] text-muted">корреляция NDVI-аномалия ↔ гибель (r)</div></div>

@@ -41,7 +41,7 @@ export function OwnerWarehouse() {
         <p className="text-sm text-muted mt-0.5">Замороженный в запасах капитал, расход на гектар и контроль перерасхода против плана сезона.</p>
       </div>
 
-      <div className="grid grid-cols-4 gap-3 mb-5">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-5">
         <Kpi v={rub(stockValue)} l="стоимость остатков (замороженный капитал)" />
         <Kpi v={rub(seasonOut)} l="израсходовано за сезон" />
         <Kpi v={rub(seasonOut / totalHa)} l={`расход на гектар · ${totalHa.toLocaleString('ru-RU')} га`} />
@@ -50,6 +50,7 @@ export function OwnerWarehouse() {
 
       <div className="bg-white border border-line rounded-2xl overflow-hidden mb-4">
         <div className="px-4 py-3 font-bold text-ink border-b border-line">Расход по статьям: факт vs план сезона</div>
+        <div className="overflow-x-auto">
         <table className="w-full text-sm">
           <thead><tr className="text-muted text-xs border-b border-line bg-canvas/40">
             <th className="text-left font-medium p-3">Статья</th>
@@ -80,6 +81,7 @@ export function OwnerWarehouse() {
             })}
           </tbody>
         </table>
+        </div>
       </div>
 
       {byType.some((b) => b.over) && (
