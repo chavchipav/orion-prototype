@@ -324,6 +324,15 @@ export function UnifiedShell() {
         <div className="px-4 py-3 border-b border-black/30">
           <div className="text-sm font-bold text-white">{ctx.name}</div>
           <div className="text-xs text-white/50">{ctx.sub}</div>
+          {/* переключатель кабинета — только на мобильном (в шапке нет места) */}
+          <div className="flex flex-wrap gap-1 mt-2 sm:hidden">
+            {ROLES.map((r) => (
+              <button key={r.key} onClick={() => switchRole(r.key)}
+                className={`text-xs px-2.5 py-1 rounded-lg font-semibold transition ${r.key === role ? 'bg-brand text-white' : 'bg-white/10 text-white/60 hover:text-white'}`}>
+                {r.label}
+              </button>
+            ))}
+          </div>
         </div>
         <nav className="flex-1 py-2 overflow-y-auto scroll-thin">
           {groups ? (
@@ -364,10 +373,10 @@ export function UnifiedShell() {
           {/* ⌘K поиск */}
           <button onClick={() => setCmdOpen(true)} className="flex items-center gap-2 text-sm bg-white/5 hover:bg-white/10 text-white/55 rounded-lg pl-2.5 pr-2 py-1.5 transition">
             <Search size={15} /><span className="hidden sm:inline">Поиск</span>
-            <kbd className="text-[10px] font-semibold bg-white/10 rounded px-1.5 py-0.5 ml-0.5">⌘K</kbd>
+            <kbd className="hidden sm:inline text-[10px] font-semibold bg-white/10 rounded px-1.5 py-0.5 ml-0.5">⌘K</kbd>
           </button>
-          {/* role switcher */}
-          <div className="relative">
+          {/* role switcher — скрыт на мобильном (вынесен в сайдбар) */}
+          <div className="relative hidden sm:block">
             <button onClick={() => setRoleMenu((v) => !v)} className="flex items-center gap-1.5 text-sm bg-white/10 hover:bg-white/15 rounded-lg px-3 py-1.5 font-semibold">
               Кабинет: {ROLES.find((r) => r.key === role)?.label} <ChevronDown size={14} />
             </button>
