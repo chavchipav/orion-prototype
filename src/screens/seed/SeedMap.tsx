@@ -50,7 +50,7 @@ export function SeedMap({ fields, picked, onPick, onAssign, onClose, height = 56
   const [map, setMap] = useState<LMap | null>(null)
   const [layer, setLayer] = useState<SeedLayer>('hybrid')
   const [pulseT, setPulseT] = useState(0)
-  useEffect(() => { const id = setInterval(() => setPulseT(t => (t + 0.06) % (Math.PI * 2)), 50); return () => clearInterval(id) }, [])
+  useEffect(() => { const id = setInterval(() => setPulseT(t => (t + 0.15) % (Math.PI * 2)), 40); return () => clearInterval(id) }, [])
   const hybrids = [...new Set(fields.map((f) => f.hybrid))]
   const centers = fields.map(centerOf)
   const focus = picked || null
@@ -65,8 +65,8 @@ export function SeedMap({ fields, picked, onPick, onAssign, onClose, height = 56
 
         {/* G3: пульсирующие кольца «риск» под пинами — триаж «куда реагировать» */}
         {!focus && fields.filter((f) => f.status === 'risk').map((f) => (
-          <CircleMarker key={`pulse-${f.id}`} center={centerOf(f)} radius={9} interactive={false}
-            pathOptions={{ color: '#e5302a', weight: 2, fill: false, opacity: 0.15 + 0.75 * (0.5 + 0.5 * Math.sin(pulseT)) }} />
+          <CircleMarker key={`pulse-${f.id}`} center={centerOf(f)} radius={14} interactive={false}
+            pathOptions={{ color: '#e5302a', weight: 4, fill: false, opacity: 0.1 + 0.9 * (0.5 + 0.5 * Math.sin(pulseT)) }} />
         ))}
 
         {/* ОБЗОР: пины клиентов (кроме сфокусированного) */}

@@ -49,8 +49,8 @@ export function MapWorkspace() {
   const [zonesOn, setZonesOn] = useState(true)
   const [map, setMap] = useState<LMap | null>(null)
   const [pulseT, setPulseT] = useState(0)
-  useEffect(() => { const id = setInterval(() => setPulseT(t => (t + 0.06) % (Math.PI * 2)), 50); return () => clearInterval(id) }, [])
-  const pulseOpacity = 0.15 + 0.75 * (0.5 + 0.5 * Math.sin(pulseT))
+  useEffect(() => { const id = setInterval(() => setPulseT(t => (t + 0.15) % (Math.PI * 2)), 40); return () => clearInterval(id) }, [])
+  const pulseOpacity = 0.1 + 0.9 * (0.5 + 0.5 * Math.sin(pulseT))
   const fitAll = () => { const b = ringsBounds(list.map((f) => f.ring)); if (map && b) map.fitBounds(b, { padding: [60, 60] }) }
 
   const sel = AG_FIELDS.find((f) => f.id === selId) || null
@@ -96,7 +96,7 @@ export function MapWorkspace() {
           {/* G3: пульсирующие кольца «риск» — глаз сразу ведёт к проблемным полям */}
           {list.filter((f) => f.status === 'risk').map((f) => {
             const c: [number, number] = [f.ring.reduce((a, p) => a + p[0], 0) / f.ring.length, f.ring.reduce((a, p) => a + p[1], 0) / f.ring.length]
-            return <CircleMarker key={`pulse-${f.id}`} center={c} radius={11} interactive={false} pathOptions={{ color: '#e5302a', weight: 2, fill: false, opacity: pulseOpacity }} />
+            return <CircleMarker key={`pulse-${f.id}`} center={c} radius={18} interactive={false} pathOptions={{ color: '#e5302a', weight: 4, fill: false, opacity: pulseOpacity }} />
           })}
           {/* внутриполевые NDVI-зоны выбранного поля (точное земледелие) */}
           {showZones && zones.map((z, i) => (
