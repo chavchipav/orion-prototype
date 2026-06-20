@@ -357,7 +357,7 @@ export function UnifiedShell() {
 
       {/* main */}
       <div className="flex-1 min-w-0 flex flex-col">
-        <header className="no-print h-14 shrink-0 bg-[#13211a] border-b border-black/30 flex items-center px-5 gap-4">
+        <header className="no-print h-14 shrink-0 bg-[#13211a] border-b border-black/30 flex items-center px-5 gap-4 overflow-x-auto">
           <button onClick={() => setNavOpen(true)} className="md:hidden text-white/70 hover:text-white -ml-1"><Menu size={20} /></button>
           <span className="text-sm font-semibold truncate">{active.label}</span>
           <div className="flex-1" />
@@ -424,7 +424,7 @@ export function UnifiedShell() {
         <main className="flex-1 min-h-0 bg-canvas text-ink">
           <Suspense fallback={<ScreenLoader />}>
             {bleed ? <div key={screen} className="h-full screen-in"><Screen screen={screen} /></div>
-              : <div key={screen} className={`h-full overflow-y-auto scroll-thin screen-in ${role === 'agronom' || role === 'owner' ? '' : 'p-6'}`}><Screen screen={screen} /></div>}
+              : <div key={screen} className={`h-full overflow-y-auto overflow-x-auto scroll-thin screen-in ${role === 'agronom' || role === 'owner' ? '' : 'p-3 sm:p-6'}`}><Screen screen={screen} /></div>}
           </Suspense>
         </main>
       </div>

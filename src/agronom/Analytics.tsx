@@ -96,7 +96,7 @@ export function Analytics() {
   })
 
   return (
-    <div className="h-full overflow-y-auto scroll-thin p-6">
+    <div className="h-full overflow-y-auto scroll-thin p-3 sm:p-6">
       <div className="flex items-center justify-between mb-4">
         <div><h2 className="text-xl font-bold text-ink">Аналитика сезонов</h2><p className="text-sm text-muted">Итоги по сезонам · память полей · ROI агрономических решений</p></div>
         <div className="flex items-center gap-3">
@@ -107,7 +107,7 @@ export function Analytics() {
         </div>
       </div>
 
-      <div className="grid grid-cols-4 gap-3 mb-4">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4">
         <Kpi v={<CountUp value={Math.round(area)} suffix=" га" />} l={`в сезоне ${year}`} />
         <Kpi v={<CountUp value={avgYield} decimals={1} suffix=" т/га" />} l="средняя урожайность" accent />
         <Kpi v={<CountUp value={Math.round(gross)} suffix=" т" />} l="валовой сбор" />
@@ -115,7 +115,7 @@ export function Analytics() {
       </div>
 
       {/* тренд по сезонам */}
-      <div className="grid grid-cols-2 gap-4 mb-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
         <div className="bg-white border border-line rounded-2xl p-5">
           <div className="font-bold text-ink mb-3">Средняя урожайность по сезонам, т/га</div>
           <div className="h-56">
@@ -158,6 +158,7 @@ export function Analytics() {
           <span>План / факт урожайности и вала · сезон {year}</span>
           {forecast && <span className="text-xs font-normal text-warn">факт = прогноз (сезон не завершён)</span>}
         </div>
+        <div className="overflow-x-auto">
         <table className="w-full text-sm">
           <thead><tr className="text-muted text-xs border-b border-line">
             <th className="text-left font-medium p-3">Поле · культура</th>
@@ -193,6 +194,7 @@ export function Analytics() {
             </tr>
           </tfoot>
         </table>
+        </div>
       </div>
 
       {/* инсайт: проблема → решение → исход */}
@@ -212,6 +214,7 @@ export function Analytics() {
           <span>Память полей · урожай и проблемы по сезонам</span>
           <span className="text-xs font-normal text-muted">клик по полю → сезон в деталях</span>
         </div>
+        <div className="overflow-x-auto">
         <table className="w-full text-sm">
           <thead><tr className="text-muted text-xs border-b border-line">
             <th className="text-left font-medium p-3">Поле</th>
@@ -237,6 +240,7 @@ export function Analytics() {
             })}
           </tbody>
         </table>
+        </div>
       </div>
 
       {open && <Chronology field={open.field} initialYear={open.year} onClose={() => setOpen(null)} />}

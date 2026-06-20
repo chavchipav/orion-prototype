@@ -122,7 +122,7 @@ export function Telematics() {
   }
 
   return (
-    <div className="h-full overflow-y-auto scroll-thin p-6">
+    <div className="h-full overflow-y-auto scroll-thin p-3 sm:p-6">
       <div className="flex items-center justify-between mb-4">
         <div>
           <h2 className="text-xl font-bold text-ink flex items-center gap-2"><Radar size={20} className="text-brand" />Телематика · диспетчерская</h2>
@@ -132,7 +132,7 @@ export function Telematics() {
       </div>
 
       {/* KPI */}
-      <div className="grid grid-cols-4 gap-3 mb-4">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4">
         <Kpi icon={<Satellite size={16} />} v={String(FLEET_KPI.inField)} l="техники в работе" />
         <Kpi icon={<Gauge size={16} />} v={`${FLEET_KPI.haToday} га`} l="обработано сегодня" />
         <Kpi icon={<Fuel size={16} />} v={`${FLEET_KPI.avgFuel} л/га`} l="средний расход ГСМ" />
@@ -225,7 +225,7 @@ export function Telematics() {
       {mode === 'plan' && (
         <div className="bg-white border border-line rounded-2xl overflow-hidden mb-4">
           <div className="px-4 py-3 font-bold text-ink border-b border-line flex items-center gap-2"><Activity size={16} className="text-brand" />План/факт внесения · {sprayField.name} ({sprayField.crop}) · {sprayM.op} · {sprayM.name}</div>
-          <div className="p-4 grid grid-cols-4 gap-3">
+          <div className="p-4 grid grid-cols-2 sm:grid-cols-4 gap-3">
             <div className="rounded-xl bg-canvas p-3"><div className="text-xl font-extrabold text-ink">{planFact.coveragePct}%</div><div className="text-xs text-muted mt-0.5">покрыто площади · {planFact.coveredHa} из {sprayField.areaHa} га</div></div>
             <div className="rounded-xl bg-risk-soft/50 p-3"><div className="text-xl font-extrabold text-risk">{planFact.missHa} га</div><div className="text-xs text-muted mt-0.5">огрех (без обработки)</div></div>
             <div className="rounded-xl bg-warn-soft/50 p-3"><div className="text-xl font-extrabold text-warn">{planFact.overlapHa} га</div><div className="text-xs text-muted mt-0.5">двойной проход (перекрытие)</div></div>
@@ -249,7 +249,7 @@ export function Telematics() {
       {/* Выработка · антифрод (вкладка) */}
       {mode === 'work' && (
         <div className="mb-4">
-          <div className="grid grid-cols-4 gap-3 mb-3">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-3">
             <div className="rounded-2xl border border-risk/30 bg-risk-soft/40 p-4 col-span-2">
               <div className="text-xs text-muted">Выявлено отклонений по телеметрии</div>
               <div className="text-2xl font-extrabold text-risk leading-none mt-1">{rub(ANTIFRAUD.total)}</div>
@@ -260,6 +260,7 @@ export function Telematics() {
           </div>
           <div className="bg-white border border-line rounded-2xl overflow-hidden">
             <div className="px-4 py-3 font-bold text-ink border-b border-line flex items-center gap-2"><Fuel size={15} className="text-brand" />Выработка по факту GPS · смена 16.06</div>
+            <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead><tr className="text-muted text-xs border-b border-line bg-canvas/40">
                 <th className="text-left font-medium p-3">Механизатор · техника</th>
@@ -284,15 +285,17 @@ export function Telematics() {
                 })}
               </tbody>
             </table>
+            </div>
             <div className="px-4 py-2.5 text-[11px] text-muted border-t border-line">Га считаются по контуру GPS-трека (точность ~99,5%), ГСМ — по датчику уровня, ЗП — по факту выработки. Слив и приписки — с геоточкой и временем, юридическая база для удержания.</div>
           </div>
         </div>
       )}
 
-      {mode !== 'work' && <div className="grid grid-cols-3 gap-4">
+      {mode !== 'work' && <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         {/* операции */}
         <div className="col-span-2 bg-white border border-line rounded-2xl overflow-hidden">
           <div className="px-4 py-3 font-bold text-ink border-b border-line">Операции · смена 16.06</div>
+          <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead><tr className="text-muted text-xs border-b border-line bg-canvas/40">
               <th className="text-left font-medium p-3">Техника · механизатор</th>
@@ -319,6 +322,7 @@ export function Telematics() {
               })}
             </tbody>
           </table>
+          </div>
         </div>
 
         {/* алерты */}

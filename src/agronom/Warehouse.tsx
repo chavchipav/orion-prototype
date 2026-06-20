@@ -63,7 +63,7 @@ export function Warehouse() {
   }
 
   return (
-    <div className="h-full overflow-y-auto scroll-thin p-6">
+    <div className="h-full overflow-y-auto scroll-thin p-3 sm:p-6">
       <div className="flex items-center justify-between mb-4">
         <div>
           <h2 className="text-xl font-bold text-ink flex items-center gap-2"><Boxes size={20} className="text-brand" />Склад</h2>
@@ -73,7 +73,7 @@ export function Warehouse() {
       </div>
 
       {/* KPI */}
-      <div className="grid grid-cols-4 gap-3 mb-4">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4">
         <Kpi v={rub(stockValue)} l="стоимость склада (замороженный капитал)" />
         <Kpi v={String(lowRows.length)} l="позиций ниже мин. остатка" accent={lowRows.length > 0} />
         <Kpi v={rub(seasonOut)} l="расход за сезон (списано на работы)" />
@@ -132,6 +132,7 @@ export function Warehouse() {
 
       {tab === 'stock' ? (
         <div className="bg-white border border-line rounded-2xl overflow-hidden">
+          <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead><tr className="text-muted text-xs border-b border-line bg-canvas/40">
               <th className="text-left font-medium p-3">Наименование</th>
@@ -161,9 +162,11 @@ export function Warehouse() {
               ))}
             </tbody>
           </table>
+          </div>
         </div>
       ) : (
         <div className="bg-white border border-line rounded-2xl overflow-hidden">
+          <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead><tr className="text-muted text-xs border-b border-line bg-canvas/40">
               <th className="text-left font-medium p-3">Наименование</th>
@@ -193,6 +196,7 @@ export function Warehouse() {
               {!ledgerShown.length && <tr><td colSpan={7} className="p-8 text-center text-muted">Нет операций по фильтру</td></tr>}
             </tbody>
           </table>
+          </div>
         </div>
       )}
 
