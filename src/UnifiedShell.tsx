@@ -366,7 +366,7 @@ export function UnifiedShell() {
 
       {/* main */}
       <div className="flex-1 min-w-0 flex flex-col">
-        <header className="no-print h-14 shrink-0 bg-[#13211a] border-b border-black/30 flex items-center px-5 gap-4 overflow-x-auto">
+        <header className="no-print h-14 shrink-0 bg-[#13211a] border-b border-black/30 flex items-center px-5 gap-4">
           <button onClick={() => setNavOpen(true)} className="md:hidden text-white/70 hover:text-white -ml-1"><Menu size={20} /></button>
           <span className="text-sm font-semibold truncate">{active.label}</span>
           <div className="flex-1" />
