@@ -89,15 +89,6 @@ body {
   border-radius: 8px;
 }
 
-/* G3 — пульсирующее кольцо «риск» на карте: ведёт глаз к проблемным полям */
-.risk-pulse {
-  animation: riskPulse 1.4s ease-in-out infinite;
-  pointer-events: none;
-}
-@keyframes riskPulse {
-  0%, 100% { opacity: 1; }
-  50%       { opacity: 0.1; }
-}
 
 /* демо-тур — въезд карточки снизу */
 @keyframes tourIn {

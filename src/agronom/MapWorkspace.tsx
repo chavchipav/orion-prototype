@@ -1,4 +1,4 @@
-import { useState, useMemo, type ReactNode } from 'react'
+import { useState, useMemo, useEffect, type ReactNode } from 'react'
 import type { Map as LMap } from 'leaflet'
 import { MapContainer, TileLayer, Polygon, Polyline, CircleMarker, Tooltip, useMap } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css'
@@ -48,6 +48,9 @@ export function MapWorkspace() {
   const [chrono, setChrono] = useState<AgField | null>(null)
   const [zonesOn, setZonesOn] = useState(true)
   const [map, setMap] = useState<LMap | null>(null)
+  const [pulseT, setPulseT] = useState(0)
+  useEffect(() => { const id = setInterval(() => setPulseT(t => (t + 0.06) % (Math.PI * 2)), 50); return () => clearInterval(id) }, [])
+  const pulseOpacity = 0.15 + 0.75 * (0.5 + 0.5 * Math.sin(pulseT))
   const fitAll = () => { const b = ringsBounds(list.map((f) => f.ring)); if (map && b) map.fitBounds(b, { padding: [60, 60] }) }
 
   const sel = AG_FIELDS.find((f) => f.id === selId) || null
@@ -93,7 +96,7 @@ export function MapWorkspace() {
           {/* G3: пульсирующие кольца «риск» — глаз сразу ведёт к проблемным полям */}
           {list.filter((f) => f.status === 'risk').map((f) => {
             const c: [number, number] = [f.ring.reduce((a, p) => a + p[0], 0) / f.ring.length, f.ring.reduce((a, p) => a + p[1], 0) / f.ring.length]
-            return <CircleMarker key={`pulse-${f.id}`} center={c} radius={11} interactive={false} pathOptions={{ className: 'risk-pulse', color: '#e5302a', weight: 2, fill: false }} />
+            return <CircleMarker key={`pulse-${f.id}`} center={c} radius={11} interactive={false} pathOptions={{ color: '#e5302a', weight: 2, fill: false, opacity: pulseOpacity }} />
           })}
           {/* внутриполевые NDVI-зоны выбранного поля (точное земледелие) */}
           {showZones && zones.map((z, i) => (
