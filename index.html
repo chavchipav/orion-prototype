@@ -1,16 +1,317 @@
-<!doctype html>
-<html lang="ru">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=0.8, user-scalable=yes, minimum-scale=0.3, maximum-scale=5.0" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-    <title>Агро — прототип</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
-</html>
+<!DOCTYPE html><html lang=ru><head><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'><title>Орион — питч · Growth Lab 2026</title><style>
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+ --vio:#7c5cff;--vio2:#a78bfa;--viod:#6c4cff;
+ --lime:#a3e635;--lime2:#84cc16;--limed:#5f8c12;
+ --amber:#ffb84d;
+ --space:#0b0b18;--space2:#15122b;--space3:#1c1640;
+ --ink:#14121f;--ink2:#332f4a;--paper:#fbfbfe;--soft:#f3f1fb;--line:#e9e6f4;--muted:#8b88a6;
+}
+html,body{height:100%;font-family:'Inter',system-ui,sans-serif;color:var(--ink);overflow:hidden;
+ background:
+  radial-gradient(900px 650px at 82% 88%, rgba(124,92,255,.16), transparent 55%),
+  radial-gradient(1000px 720px at 12% 8%, rgba(163,230,53,.10), transparent 55%),
+  linear-gradient(150deg,#080814,#120f26 50%,#0a0917);}
+.stage{position:fixed;inset:0;display:grid;place-items:center}
+.slide{position:absolute;width:1280px;height:720px;background:var(--paper);border-radius:28px;overflow:hidden;
+ box-shadow:0 50px 130px rgba(0,0,0,.6),0 0 0 1px rgba(255,255,255,.05);
+ display:none;grid-template-rows:auto 1fr auto;padding:44px 58px 28px;
+ opacity:0;transform:scale(.97) translateY(14px);transition:opacity .55s,transform .55s}
+.slide.active{display:grid;opacity:1;transform:none}
+.head{display:flex;align-items:center;justify-content:space-between;z-index:5}
+.eyebrow{font-family:'Manrope';font-size:12.5px;font-weight:800;letter-spacing:.24em;text-transform:uppercase;color:var(--vio)}
+.logo{font-family:'Manrope';font-size:16px;font-weight:800;display:flex;align-items:center;gap:9px}
+.logo .mark{width:30px;height:30px;flex:0 0 auto}
+.logosub{font-size:11px;font-weight:600;letter-spacing:.01em;margin-left:-2px}
+.body{display:flex;flex-direction:column;justify-content:center;gap:14px;z-index:2}
+h1{font-family:'Manrope';font-weight:900;letter-spacing:-.025em;line-height:1.02;font-size:52px}
+h2{font-family:'Manrope';font-weight:900;letter-spacing:-.02em;line-height:1.06;font-size:38px}
+.lead{font-size:17px;color:#403c57;line-height:1.45;max-width:1000px}
+.foot{display:flex;align-items:center;gap:14px;font-size:11.5px;color:var(--muted);z-index:5}
+.pn{font-variant-numeric:tabular-nums;font-weight:800;color:var(--vio)}
+.prog{flex:1;height:4px;background:#eceaf6;border-radius:3px;overflow:hidden}
+.prog i{display:block;height:100%;background:linear-gradient(90deg,var(--vio),var(--lime));transition:width .5s}
+.vio{color:var(--vio)} .lime{color:var(--limed)} .amber{color:#cf8a18}
+.hero{font-family:'Manrope';font-weight:900;letter-spacing:-.03em;line-height:.92}
+.grad{background:linear-gradient(108deg,var(--vio2),var(--lime));-webkit-background-clip:text;background-clip:text;color:transparent}
+.gradv{background:linear-gradient(108deg,#b9a6ff,var(--vio));-webkit-background-clip:text;background-clip:text;color:transparent}
+.chip{display:inline-flex;align-items:center;gap:6px;font-family:'Manrope';font-weight:800;font-size:12px;padding:5px 12px;border-radius:30px}
+.chip.v{background:#efeaff;color:var(--viod)} .chip.l{background:#eef8d8;color:var(--limed)}
+.chip.a{background:#fff2dd;color:#b5790f} .chip.n{background:#eeecf7;color:var(--ink2)}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:17px 20px;position:relative;overflow:hidden}
+.card.glow{box-shadow:0 18px 44px rgba(60,40,120,.10)}
+.row{display:flex;gap:16px}.col{flex:1}
+.kbig{font-family:'Manrope';font-weight:900;letter-spacing:-.02em;line-height:1}
+.ksub{font-size:13px;color:#56536e;margin-top:4px;line-height:1.42}
+.rv{opacity:0;transform:translateY(20px)}
+.rv-go{animation:rvin .6s cubic-bezier(.2,.8,.2,1) forwards}
+@keyframes rvin{to{opacity:1;transform:none}}
+.gbar{height:0;border-radius:7px;transition:width .9s cubic-bezier(.2,.8,.2,1)}
+svg{display:block;overflow:visible}
+/* dark slides */
+.dark{background:linear-gradient(150deg,#0a0a18,#150f2e 52%,#0b0a1c);color:#fff}
+.dark .stars{position:absolute;inset:0;z-index:0;
+ background-image:radial-gradient(1.4px 1.4px at 20% 30%,rgba(205,211,240,.5),transparent),
+  radial-gradient(1.4px 1.4px at 70% 60%,rgba(205,211,240,.4),transparent),
+  radial-gradient(1.2px 1.2px at 45% 80%,rgba(205,211,240,.4),transparent),
+  radial-gradient(1.6px 1.6px at 85% 25%,rgba(163,230,53,.5),transparent),
+  radial-gradient(1.2px 1.2px at 12% 70%,rgba(124,92,255,.6),transparent),
+  radial-gradient(1.3px 1.3px at 60% 18%,rgba(205,211,240,.4),transparent);}
+.blob{position:absolute;border-radius:50%;filter:blur(60px);z-index:0}
+.tag{display:inline-flex;align-items:center;gap:9px;font-family:'Manrope';font-weight:800;font-size:15px;padding:9px 18px;border-radius:40px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);color:#eef0ff}
+.dcard{background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:15px 18px;backdrop-filter:blur(6px)}
+/* segments */
+.seg{display:grid;grid-template-columns:32px 1.5fr 1.65fr 1.25fr;align-items:center;padding:8px 12px;border-radius:11px;font-size:12.5px;transition:.25s;border:1px solid transparent}
+.seg:hover{background:#fff;border-color:var(--line);box-shadow:0 10px 26px rgba(60,40,120,.10);transform:translateX(3px)}
+.seg .num{font-family:'Manrope';font-weight:900;font-size:15px}
+.seg .s1{font-weight:700} .seg .s2{color:#56536e} .seg .s3{font-weight:700}
+.mono{font-variant-numeric:tabular-nums}
+/* econ table */
+.etbl{width:100%;border-collapse:collapse;font-size:12.5px;font-variant-numeric:tabular-nums}
+.etbl th,.etbl td{padding:6px 12px;text-align:right;white-space:nowrap}
+.etbl thead .grp{font-family:'Manrope';font-weight:800;font-size:11.5px;letter-spacing:.02em;color:#56536e;border-bottom:1px solid var(--line)}
+.etbl thead .grp .dr{color:var(--vio)} .etbl thead .grp .ba{color:var(--limed)}
+.etbl thead .sub th{font-family:'Manrope';font-weight:800;font-size:11px;color:var(--muted);border-bottom:2px solid var(--ink);padding-top:2px}
+.etbl td:first-child,.etbl th:first-child{text-align:left;font-weight:600;color:#403c57}
+.etbl tbody tr td{border-bottom:1px solid var(--line)}
+.etbl .orion{background:#f6fbe9} .etbl thead .orion{background:#eef8d8}
+.etbl tr.hl td{font-family:'Manrope';font-weight:900;font-size:13.5px}
+.etbl .pos{color:var(--limed)} .etbl .neg{color:var(--vio)}
+.imgwrap{border-radius:14px;overflow:hidden;border:1px solid var(--line);box-shadow:0 18px 44px rgba(60,40,120,.16);background:#0b0b18}
+.imgwrap video{width:100%;display:block}
+.navhint{position:fixed;bottom:12px;left:50%;transform:translateX(-50%);font-size:11px;color:rgba(255,255,255,.38);z-index:30}
+.dots{position:fixed;bottom:14px;right:18px;display:flex;gap:7px;z-index:30}
+.dots b{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.25);cursor:pointer;transition:.25s}
+.dots b.on{background:linear-gradient(135deg,var(--vio),var(--lime));width:22px;border-radius:6px}
+@media print{@page{size:1280px 720px;margin:0}html,body{background:#fff}.stage{position:static;display:block}
+ .slide{display:grid!important;opacity:1!important;transform:none!important;page-break-after:always;box-shadow:none;border-radius:0;margin:0 auto;zoom:1!important}
+ .navhint,.dots{display:none}.rv{opacity:1!important;transform:none!important}}
+</style></head><body><div class=stage id=stage>
+<section class="slide dark active">
+ <div class="stars"></div>
+ <div class="blob" style="width:520px;height:520px;background:var(--vio);left:-140px;top:-170px;opacity:.5"></div>
+ <div class="blob" style="width:440px;height:440px;background:var(--lime2);right:-130px;bottom:-160px;opacity:.28"></div>
+ <div class="blob" style="width:360px;height:360px;background:#5b3df0;right:280px;top:-110px;opacity:.3"></div>
+ <div class="head"><div class="eyebrow" style="color:#b9a6ff">Яндекс · Growth Lab · 2026</div><div class="logo"><svg class="mark" viewBox="0 0 48 48" fill="none"><g stroke="#cdd3f0" stroke-width="1" opacity=".45"><path d="M9 13 L23 8 L39 12 L34 31 L15 39 Z"/></g><path d="M31 6 L18 25 L26 25 L15 42" stroke="url(#mg)" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/><g fill="#cdd3f0"><circle cx="9" cy="13" r="2"/><circle cx="23" cy="8" r="2"/><circle cx="39" cy="12" r="2"/><circle cx="34" cy="31" r="2"/><circle cx="15" cy="39" r="2"/></g><circle cx="24.5" cy="23" r="3" fill="#a3e635"/><circle cx="20" cy="29" r="2.5" fill="#84cc16"/><defs><linearGradient id="mg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9b82ff"/><stop offset="1" stop-color="#6c4cff"/></linearGradient></defs></svg><span style="color:#eef0ff">Орион</span><span class="logosub" style="color:#8a87b8">· Агро · на стеке Яндекса</span></div></div>
+ <div class="body">
+  <div class="tag rv">✦ Орион · платформа роста АПК на стеке Яндекса</div>
+  <h1 class="rv" style="font-size:70px;color:#fff;max-width:1060px">Мы строим <span class="grad">платформу роста</span><br>всего АПК</h1>
+  <p class="lead rv" style="color:#c9c6ec;max-width:1010px;font-size:19px">Сегодня рынок — это разрозненные решения: каждый продаёт свой кусок и тянет свою маржу. Мы даём <b style="color:#fff">каждому игроку</b> растить бизнес за счёт одного — <b style="color:#fff">успеха поля</b>. Индустрия, где есть только один шанс за сезон.</p>
+  <div class="rv" style="margin-top:12px;font-family:'Manrope';font-weight:800;font-size:22px;color:#fff">«Кто первым докажет полем — <span class="grad">тот первым и продаст»</span></div>
+ </div>
+ <div class="foot"><span class="pn" style="color:#9b93c9"></span><span class="prog" style="background:rgba(255,255,255,.12)"><i></i></span><span style="color:#9b93c9">Go Beyond · Growth Lab</span></div>
+</section>
+<section class="slide">
+ <div class="head"><div class="eyebrow">02 · Рынок</div><div class="logo"><svg class="mark" viewBox="0 0 48 48" fill="none"><g stroke="#cdd3f0" stroke-width="1" opacity=".45"><path d="M9 13 L23 8 L39 12 L34 31 L15 39 Z"/></g><path d="M31 6 L18 25 L26 25 L15 42" stroke="url(#mg)" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/><g fill="#cdd3f0"><circle cx="9" cy="13" r="2"/><circle cx="23" cy="8" r="2"/><circle cx="39" cy="12" r="2"/><circle cx="34" cy="31" r="2"/><circle cx="15" cy="39" r="2"/></g><circle cx="24.5" cy="23" r="3" fill="#a3e635"/><circle cx="20" cy="29" r="2.5" fill="#84cc16"/><defs><linearGradient id="mg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9b82ff"/><stop offset="1" stop-color="#6c4cff"/></linearGradient></defs></svg><span style="color:#15122b">Орион</span><span class="logosub" style="color:#9a98b8">· Агро · на стеке Яндекса</span></div></div>
+ <div class="body">
+  <h2 class="rv">Рынок раздроблен, с огромным потенциалом — и не консолидируется</h2>
+  <div class="row" style="margin-top:6px;align-items:stretch">
+   <div class="col card glow rv" style="flex:.95">
+     <div class="chip l">Сельское хозяйство РФ · 2024</div>
+     <div class="kbig vio" style="font-size:60px;margin-top:10px"><span data-count="8.9" data-dec="1">0</span> <span style="font-size:25px;color:var(--muted)">трлн ₽</span></div>
+     <div class="ksub">≈50 / 50 — растениеводство и животноводство</div>
+     <div style="margin-top:16px">
+       <div style="display:flex;height:22px;border-radius:7px;overflow:hidden;font-size:11px;font-weight:800;color:#fff">
+         <div style="width:60%;background:var(--vio);display:grid;place-items:center">СХО 60%</div>
+         <div style="width:25%;background:var(--lime2);display:grid;place-items:center">ЛПХ 25%</div>
+         <div style="width:15%;background:var(--amber);display:grid;place-items:center">КФХ 15%</div>
+       </div>
+       <div class="ksub" style="margin-top:8px">Структура производства по категориям хозяйств</div>
+     </div>
+   </div>
+   <div class="col" style="display:flex;flex-direction:column;gap:12px">
+    <div class="card glow rv"><div class="kbig lime" style="font-size:38px"><span data-count="80">0</span><span style="font-size:18px;color:var(--muted)"> млн га</span></div><div class="ksub">посевная из 400 млн га с/х земли — <b>всего 20%.</b> Потенциал роста индустрии огромный.</div></div>
+    <div class="card glow rv"><div class="kbig" style="font-size:32px"><span class="vio" data-count="23">0</span>% <span style="font-size:15px;color:var(--muted)">посевной — у топ-100 землевладельцев</span></div><div class="ksub">18,5 млн га; за год прибавили лишь +0,5 млн га — рынок <b>не консолидируется</b></div></div>
+    <div class="card rv" style="background:linear-gradient(135deg,#efeaff,#f3fbe2);border-color:#d9d0ff"><div class="kbig vio" style="font-size:32px"><span data-count="77">0</span>%</div><div class="ksub" style="color:#3d2f6b"><b>посевной — во владении 96 тысяч действующих предприятий</b> (всего 136 тыс). Вот раздробленный хвост, в который никто не пришёл.</div></div>
+   </div>
+  </div>
+ </div>
+ <div class="foot"><span class="pn"></span><span class="prog"><i></i></span><span>Источник: Росстат, микроперепись-2021, BEFL</span></div>
+</section>
+<section class="slide">
+ <div class="head"><div class="eyebrow">03 · Цепочка АПК · TAM входов</div><div class="logo"><svg class="mark" viewBox="0 0 48 48" fill="none"><g stroke="#cdd3f0" stroke-width="1" opacity=".45"><path d="M9 13 L23 8 L39 12 L34 31 L15 39 Z"/></g><path d="M31 6 L18 25 L26 25 L15 42" stroke="url(#mg)" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/><g fill="#cdd3f0"><circle cx="9" cy="13" r="2"/><circle cx="23" cy="8" r="2"/><circle cx="39" cy="12" r="2"/><circle cx="34" cy="31" r="2"/><circle cx="15" cy="39" r="2"/></g><circle cx="24.5" cy="23" r="3" fill="#a3e635"/><circle cx="20" cy="29" r="2.5" fill="#84cc16"/><defs><linearGradient id="mg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9b82ff"/><stop offset="1" stop-color="#6c4cff"/></linearGradient></defs></svg><span style="color:#15122b">Орион</span><span class="logosub" style="color:#9a98b8">· Агро · на стеке Яндекса</span></div></div>
+ <div class="body">
+  <h2 class="rv">АПК — это цепочка. Мы заходим в поле</h2>
+  <div class="rv" style="display:flex;align-items:center;gap:10px;margin:8px 0 4px;flex-wrap:wrap">
+    <div class="chip a" style="font-size:13px;padding:9px 15px">Средства производства<br><span style="font-weight:600;color:#9a7a2a">семена · СЗР · удобрения</span></div>
+    <span style="font-size:22px;color:var(--muted)">→</span>
+    <div class="chip" style="font-size:13px;padding:9px 15px;background:var(--vio);color:#fff">ПОЛЕ · растениеводство<br><span style="font-weight:600;opacity:.85">здесь рождаются данные</span></div>
+    <span style="font-size:22px;color:var(--muted)">→</span>
+    <div class="chip l" style="font-size:13px;padding:9px 15px">Потребители результата<br><span style="font-weight:600;color:var(--limed)">экспорт №1 · животноводство · переработка</span></div>
+  </div>
+  <p class="lead rv" style="font-size:15.5px">Построив продукт для поля, мы идём вверх по цепочке — к его партнёрам и потребителям. Но входим не где угодно, а в единственный незанятый вход.</p>
+  <div class="row" style="align-items:center;margin-top:6px">
+   <div class="col rv" style="flex:0 0 320px;display:grid;place-items:center">
+    <svg width="280" height="240" viewBox="0 0 280 240">
+      <g transform="translate(140,118) rotate(-90)">
+        <circle r="78" fill="none" stroke="#efedf8" stroke-width="30"/>
+        <circle r="78" fill="none" stroke="#b3aad6" stroke-width="30" stroke-dasharray="243 247" stroke-dashoffset="0"/>
+        <circle r="78" fill="none" stroke="#a7cf63" stroke-width="30" stroke-dasharray="152 338" stroke-dashoffset="-245"/>
+        <circle r="78" fill="none" stroke="#6c4cff" stroke-width="31" stroke-dasharray="89 401" stroke-dashoffset="-399"/>
+      </g>
+      <g transform="translate(140,118)">
+        <text y="-4" text-anchor="middle" font-family="Manrope" font-weight="900" font-size="34" fill="#14121f">540</text>
+        <text y="16" text-anchor="middle" font-size="12" fill="#8b88a6">млрд ₽ · TAM входов</text>
+      </g>
+    </svg>
+   </div>
+   <div class="col" style="display:flex;flex-direction:column;gap:9px">
+    <div class="rv" style="display:flex;align-items:center;gap:10px"><span style="width:13px;height:13px;border-radius:4px;background:#b3aad6"></span><b style="font-family:Manrope;font-weight:800">Удобрения 270</b><span style="color:var(--muted)">— ресурсоёмко, top-5 ≈ 70%</span></div>
+    <div class="rv" style="display:flex;align-items:center;gap:10px"><span style="width:13px;height:13px;border-radius:4px;background:#a7cf63"></span><b style="font-family:Manrope;font-weight:800">СЗР 170</b><span style="color:var(--muted)">— ресурсоёмко, top-5 ≈ 70%</span></div>
+    <div class="rv" style="display:flex;align-items:center;gap:10px"><span style="width:13px;height:13px;border-radius:4px;background:#6c4cff"></span><b style="font-family:Manrope;font-weight:800;color:var(--vio)">Семеноводство 100</b><span style="color:var(--muted)">— наименьший, но <b style="color:#14121f">единственный незанятый</b></span></div>
+    <div class="card rv" style="margin-top:6px;background:#efeaff;border-color:#d9d0ff;padding:13px 16px"><div class="ksub" style="color:#3d2f6b;font-size:13.5px">В удобрениях и СЗР канал занят <b>самими производителями</b> (свои агроцентры, прямые поставки холдингам). Поэтому мы <b>сознательно идём в семеноводство</b> — раздроблённое, маржинальное, неоцифрованное.</div></div>
+   </div>
+  </div>
+ </div>
+ <div class="foot"><span class="pn"></span><span class="prog"><i></i></span><span>TAM = 270 удобрения + 170 СЗР + 100 семена</span></div>
+</section>
+<section class="slide">
+ <div class="head"><div class="eyebrow">04 · Почему сейчас</div><div class="logo"><svg class="mark" viewBox="0 0 48 48" fill="none"><g stroke="#cdd3f0" stroke-width="1" opacity=".45"><path d="M9 13 L23 8 L39 12 L34 31 L15 39 Z"/></g><path d="M31 6 L18 25 L26 25 L15 42" stroke="url(#mg)" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/><g fill="#cdd3f0"><circle cx="9" cy="13" r="2"/><circle cx="23" cy="8" r="2"/><circle cx="39" cy="12" r="2"/><circle cx="34" cy="31" r="2"/><circle cx="15" cy="39" r="2"/></g><circle cx="24.5" cy="23" r="3" fill="#a3e635"/><circle cx="20" cy="29" r="2.5" fill="#84cc16"/><defs><linearGradient id="mg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9b82ff"/><stop offset="1" stop-color="#6c4cff"/></linearGradient></defs></svg><span style="color:#15122b">Орион</span><span class="logosub" style="color:#9a98b8">· Агро · на стеке Яндекса</span></div></div>
+ <div class="body">
+  <div style="display:flex;align-items:baseline;gap:16px" class="rv"><h2>Окно входа</h2><span class="hero vio" style="font-size:44px">2026–2028</span><span style="color:var(--muted);font-size:14.5px">до выхода на 75% самообеспеченности (≈2029) — победит вошедший первым</span></div>
+  <div class="row" style="margin-top:10px;gap:13px">
+   <div class="col card glow rv"><div class="chip v">а · Шок-2022</div><div class="ksub" style="margin-top:9px;font-size:13.5px">Иностранные лидеры <b>Corteva, Bayer, BASF</b> свернули инвестиции. Запрет ввоза из питомников + квота — а это <b class="vio">90%</b> оборота семян, которые «просто покупали и сеяли».</div></div>
+   <div class="col card glow rv"><div class="chip a">б · Низкая отеч. селекция</div><div style="margin-top:10px"><div style="display:flex;align-items:center;gap:10px;margin:7px 0"><span style="width:78px;font-size:12px;color:#56536e">свёкла</span><div style="flex:1;height:14px;background:#efedf8;border-radius:8px;position:relative;overflow:hidden"><div class="gbar" data-h="2" style="height:14px;background:#6c4cff;border-radius:8px"></div></div><span style="width:40px;font-family:Manrope;font-weight:800;font-size:12.5px;color:#6c4cff">2%</span></div><div style="display:flex;align-items:center;gap:10px;margin:7px 0"><span style="width:78px;font-size:12px;color:#56536e">картофель</span><div style="flex:1;height:14px;background:#efedf8;border-radius:8px;position:relative;overflow:hidden"><div class="gbar" data-h="7" style="height:14px;background:#7c5cff;border-radius:8px"></div></div><span style="width:40px;font-family:Manrope;font-weight:800;font-size:12.5px;color:#7c5cff">7%</span></div><div style="display:flex;align-items:center;gap:10px;margin:7px 0"><span style="width:78px;font-size:12px;color:#56536e">подсолн.</span><div style="flex:1;height:14px;background:#efedf8;border-radius:8px;position:relative;overflow:hidden"><div class="gbar" data-h="15" style="height:14px;background:#9a8cff;border-radius:8px"></div></div><span style="width:40px;font-family:Manrope;font-weight:800;font-size:12.5px;color:#9a8cff">15%</span></div><div style="position:relative;margin-top:4px"><div style="border-top:2px dashed var(--limed);position:relative"><span style="position:absolute;right:46px;top:-9px;background:#fff;padding:0 6px;font-family:Manrope;font-weight:800;font-size:11px;color:var(--limed)">порог Доктрины ≥75%</span></div></div></div></div>
+  </div>
+  <div class="row" style="margin-top:13px;gap:13px">
+   <div class="col card glow rv"><div class="chip l">в · Поворот повестки</div><div class="ksub" style="margin-top:9px;font-size:13.5px">Контент-анализ деловых каналов <b>2017→2026</b>: от экспортной экспансии — к <b>импортозамещению</b> и адаптации к климату/санкциям.</div></div>
+   <div class="col card glow rv"><div class="chip l">г · Цифровой вакуум</div><div class="ksub" style="margin-top:9px;font-size:13.5px">Холдинги оцифрованы на <b>90–100%</b>, а хвост из <b>96 тыс</b> активных хозяйств — почти нет. Охват пашни ~<b class="vio">10%</b> (индекс 27,2 vs 75,5 США). Семеноводы — влиятельные, маржинальные, но <b>в Excel и мессенджерах</b>.</div></div>
+  </div>
+ </div>
+ <div class="foot"><span class="pn"></span><span class="prog"><i></i></span><span>Источник: Минсельхоз, Доктрина №20, Сколково</span></div>
+</section>
+<section class="slide">
+ <div class="head"><div class="eyebrow">05 · Ценность · экономика</div><div class="logo"><svg class="mark" viewBox="0 0 48 48" fill="none"><g stroke="#cdd3f0" stroke-width="1" opacity=".45"><path d="M9 13 L23 8 L39 12 L34 31 L15 39 Z"/></g><path d="M31 6 L18 25 L26 25 L15 42" stroke="url(#mg)" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/><g fill="#cdd3f0"><circle cx="9" cy="13" r="2"/><circle cx="23" cy="8" r="2"/><circle cx="39" cy="12" r="2"/><circle cx="34" cy="31" r="2"/><circle cx="15" cy="39" r="2"/></g><circle cx="24.5" cy="23" r="3" fill="#a3e635"/><circle cx="20" cy="29" r="2.5" fill="#84cc16"/><defs><linearGradient id="mg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9b82ff"/><stop offset="1" stop-color="#6c4cff"/></linearGradient></defs></svg><span style="color:#15122b">Орион</span><span class="logosub" style="color:#9a98b8">· Агро · на стеке Яндекса</span></div></div>
+ <div class="body">
+  <div class="row" style="align-items:center"><h2 class="rv" style="flex:1">Семеноводство растёт быстрее всех. Но боль — дальше по полю</h2></div>
+  <p class="lead rv" style="font-size:13.5px;line-height:1.4">Высокие риски без права на ошибку рождают конфликт интересов и работу с полем наугад. Сервисы решают точечные задачи <b>вне зависимости от результата</b> — но нет платформы, которая помогает выйти в прибыль по итогам года. Эффект ИИ — до <b class="vio">+15% урожайности</b>: этого хватает, чтобы выйти из сезона без убытка — как в засуху-2025.</p>
+  <div class="card rv glow" style="padding:14px 18px;margin-top:2px">
+   <div style="font-family:Manrope;font-weight:900;font-size:15px;margin-bottom:8px">Сценарии: урожайность × цена <span style="font-weight:600;color:var(--muted);font-size:12px">· подсолнечник, ₽/га</span></div>
+   <table class="etbl">
+    <thead>
+     <tr class="grp"><th></th><th colspan="2"><span class="dr">Засуха · РФ 2025</span></th><th colspan="2" class="orion"><span class="ba">Базовый · РФ '16–20</span></th></tr>
+     <tr class="sub"><th>Параметр</th><th>Базовый</th><th>с Орион</th><th class="orion">Базовый</th><th class="orion">с Орион</th></tr>
+    </thead>
+    <tbody>
+     <tr><td>Урожайность, ц/га</td><td class="">15</td><td class="">17</td><td class="orion">25</td><td class="orion">29</td></tr>
+     <tr><td>Цена, ₽/т</td><td class="">34 000</td><td class="">34 000</td><td class="orion">34 000</td><td class="orion">34 000</td></tr>
+     <tr><td>Выручка/га</td><td class="">51 340</td><td class="">59 041</td><td class="orion">85 000</td><td class="orion">97 750</td></tr>
+     <tr><td>Полная себестоимость/га</td><td class="">54 867</td><td class="">54 867</td><td class="orion">54 867</td><td class="orion">54 867</td></tr>
+     <tr class="hl"><td>Прибыль/га (+субсидия)</td><td class="neg">−1 527 ₽</td><td class="pos">6 174 ₽</td><td class="orion pos">32 133 ₽</td><td class="orion pos">44 883 ₽</td></tr>
+     <tr><td>Рентабельность затрат</td><td class="neg">−3%</td><td class="pos">11%</td><td class="orion pos">59%</td><td class="orion pos">82%</td></tr>
+     <tr><td>Прибыль на 1 тыс га</td><td class="neg">−1,53 млн</td><td class="pos">6,17 млн</td><td class="orion pos">32,13 млн</td><td class="orion pos">44,88 млн</td></tr>
+    </tbody>
+   </table>
+  </div>
+  <div class="rv ksub" style="font-size:12px;margin-top:2px">Засуха-2025 без нас — <b class="vio">убыток −1 527 ₽/га</b>; с Орион +15% урожая → <b class="lime">прибыль +6 174 ₽/га</b>. В нормальный год: 32 133 → <b class="lime">44 883 ₽/га (82%)</b>.</div>
+ </div>
+ <div class="foot"><span class="pn"></span><span class="prog"><i></i></span><span>Цены 2025/26 (RUSEED, 34 тыс ₽/т); +15% — верхняя оценка эффекта ИИ</span></div>
+</section>
+<section class="slide">
+ <div class="head"><div class="eyebrow">06 · Что предлагаем · Moat</div><div class="logo"><svg class="mark" viewBox="0 0 48 48" fill="none"><g stroke="#cdd3f0" stroke-width="1" opacity=".45"><path d="M9 13 L23 8 L39 12 L34 31 L15 39 Z"/></g><path d="M31 6 L18 25 L26 25 L15 42" stroke="url(#mg)" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/><g fill="#cdd3f0"><circle cx="9" cy="13" r="2"/><circle cx="23" cy="8" r="2"/><circle cx="39" cy="12" r="2"/><circle cx="34" cy="31" r="2"/><circle cx="15" cy="39" r="2"/></g><circle cx="24.5" cy="23" r="3" fill="#a3e635"/><circle cx="20" cy="29" r="2.5" fill="#84cc16"/><defs><linearGradient id="mg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9b82ff"/><stop offset="1" stop-color="#6c4cff"/></linearGradient></defs></svg><span style="color:#15122b">Орион</span><span class="logosub" style="color:#9a98b8">· Агро · на стеке Яндекса</span></div></div>
+ <div class="body">
+  <h2 class="rv">Два контура, которые не воюют</h2>
+  <div class="row" style="margin-top:4px">
+   <div class="col" style="display:flex;flex-direction:column;gap:11px">
+    <div class="card rv" style="border:2px solid var(--vio)"><div class="chip v">⚖️ Контур фермера — проверенные решения</div><div class="ksub" style="margin-top:8px;font-size:13.5px">AI ранжирует гибриды <b>по полевому результату</b>. Источник факта — спутник и независимый замёр, не слово семеновода. <b>Позицию в выдаче купить нельзя.</b></div></div>
+    <div class="card rv" style="border:2px solid var(--lime2);background:#fbfee9"><div class="chip l">💼 Контур семеновода — инструмент привлечения</div><div class="ksub" style="margin-top:8px;font-size:13.5px">Платит за <b>доказательную машину + удобство ведения сделки</b> — за инструмент, а не за место в ранжировании.</div></div>
+    <div class="card rv glow dark" style="background:linear-gradient(135deg,#0c0a1c,#1a1338);color:#fff;border:none"><div style="font-family:Manrope;font-weight:800;font-size:15px;color:var(--lime)">Ров = нейтральность</div><div class="ksub" style="color:#c9c6ec;margin-top:6px;font-size:13px">Данных «поле×результат» у поле.рф уже больше наших. Мы построим доверие к бренду через схему: <b style="color:#fff">1 семеновод → хозяйства → данные → следующий семеновод.</b></div></div>
+   </div>
+   <div class="col rv" style="flex:0 0 540px">
+    <div style="display:flex;justify-content:flex-end;margin-bottom:7px"><span style="display:inline-flex;align-items:center;gap:6px;font-family:Manrope;font-weight:800;font-size:11px;letter-spacing:.04em;color:#0b0b18;background:#a3e635;padding:4px 11px;border-radius:20px">● ЖИВОЙ ПРОТОТИП</span></div><div class="imgwrap"><div style="position:relative;width:100%;height:337px;overflow:hidden;background:#0b0b18"><iframe src="app.html" title="Орион — живой прототип" loading="lazy" style="position:absolute;top:0;left:0;width:1366px;height:854px;border:0;transform:scale(.394);transform-origin:top left"></iframe></div></div>
+    <div style="display:flex;align-items:center;gap:10px;margin-top:10px"><span class="ksub" style="font-size:13px"><b>Genesis</b> — реальный семеновод подсолнечника, 5 регионов, 1000 га. Прототип отправлен на тест.</span></div>
+   </div>
+  </div>
+ </div>
+ <div class="foot"><span class="pn"></span><span class="prog"><i></i></span><span>Кликабельный прототип · 5 ролей · демо у Genesis</span></div>
+</section>
+<section class="slide">
+ <div class="head"><div class="eyebrow">07 · План · карта сегментов</div><div class="logo"><svg class="mark" viewBox="0 0 48 48" fill="none"><g stroke="#cdd3f0" stroke-width="1" opacity=".45"><path d="M9 13 L23 8 L39 12 L34 31 L15 39 Z"/></g><path d="M31 6 L18 25 L26 25 L15 42" stroke="url(#mg)" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/><g fill="#cdd3f0"><circle cx="9" cy="13" r="2"/><circle cx="23" cy="8" r="2"/><circle cx="39" cy="12" r="2"/><circle cx="34" cy="31" r="2"/><circle cx="15" cy="39" r="2"/></g><circle cx="24.5" cy="23" r="3" fill="#a3e635"/><circle cx="20" cy="29" r="2.5" fill="#84cc16"/><defs><linearGradient id="mg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9b82ff"/><stop offset="1" stop-color="#6c4cff"/></linearGradient></defs></svg><span style="color:#15122b">Орион</span><span class="logosub" style="color:#9a98b8">· Агро · на стеке Яндекса</span></div></div>
+ <div class="body" style="gap:6px">
+  <h2 class="rv">Клин → бесплатный охват → <span class="vio">стек монетизации</span></h2>
+  <p class="lead rv" style="font-size:14.5px">Заходим клином через семеновода → бесплатный ИИ-агроном набирает фермеров и плотность данных → монетизируем базу <b>стеком слоёв</b> → на данных монетизируем институты. Каждый сегмент открывает следующий.</p>
+  <div style="display:grid;grid-template-columns:32px 1.5fr 1.65fr 1.25fr;padding:0 12px;font-size:10.5px;font-family:Manrope;font-weight:800;color:#8b88a6;letter-spacing:.04em;text-transform:uppercase"><span>#</span><span>Сегмент</span><span>Решение</span><span>Монетизация</span></div>
+  <div style="margin-top:2px"><div class="seg rv"><span class="num" style="color:#6c4cff">W</span><span class="s1">Семеновод (Genesis) — WEDGE</span><span class="s2">доказать гибрид · CRM · риск-шеринг · data-loop</span><span class="s3" style="color:#6c4cff">подписка до 300 тыс/год</span></div><div class="seg rv"><span class="num" style="color:#5f8c12">1</span><span class="s1">Фермер/агроном МСП (3–10к га)</span><span class="s2">Free ИИ-агроном — мотор данных</span><span class="s3" style="color:#5f8c12">0 ₽ · acquisition</span></div><div class="seg rv"><span class="num" style="color:#5f8c12">2</span><span class="s1">тот же фермер, премиум</span><span class="s2">Pro 55 ₽/га — спутник/CV · Метеум · ML · гео-IT</span><span class="s3" style="color:#5f8c12">подписка ₽/га</span></div><div class="seg rv"><span class="num" style="color:#7c5cff">3</span><span class="s1">Владелец / директор</span><span class="s2">дашборд P&L · согласования · антифрод</span><span class="s3" style="color:#7c5cff">внутри Pro</span></div><div class="seg rv"><span class="num" style="color:#6c4cff">4</span><span class="s1">Маркетплейс входов</span><span class="s2">рекомендация → покупка в одном окне</span><span class="s3" style="color:#6c4cff">take ~5% с GMV</span></div><div class="seg rv"><span class="num" style="color:#7c5cff">5</span><span class="s1">Дистрибьютор (партнёр)</span><span class="s2">заявки + финтех-отсрочка как ЕГО инструмент</span><span class="s3" style="color:#7c5cff">take с логистики/лида</span></div><div class="seg rv"><span class="num" style="color:#cf8a18">6</span><span class="s1">IoT / телеметрия</span><span class="s2">датчики · телематика · автопилот-ассист</span><span class="s3" style="color:#cf8a18">hardware + saas</span></div><div class="seg rv"><span class="num" style="color:#cf8a18">7</span><span class="s1">Инфра (крупные + гос-участие)</span><span class="s2">Cloud/ML usage + гео-IT must-have</span><span class="s3" style="color:#cf8a18">usage-billing</span></div><div class="seg rv"><span class="num" style="color:#9a8cff">8</span><span class="s1">Банк / страховщик</span><span class="s2">скоринг залога · страховка · DWH</span><span class="s3" style="color:#9a8cff">fee 0,5–1% + success-fee</span></div><div class="seg rv"><span class="num" style="color:#8b88a6">U</span><span class="s1">Upside: роботикс + полный финтех</span><span class="s2">Physical-AI/VLA · агрокредиты ~трлн</span><span class="s3" style="color:#8b88a6">вне базового SOM</span></div></div>
+ </div>
+ <div class="foot"><span class="pn"></span><span class="prog"><i></i></span><span>Один data-актив — много сегментов поверх</span></div>
+</section>
+<section class="slide">
+ <div class="head"><div class="eyebrow">08 · Рост SOM · монетизация</div><div class="logo"><svg class="mark" viewBox="0 0 48 48" fill="none"><g stroke="#cdd3f0" stroke-width="1" opacity=".45"><path d="M9 13 L23 8 L39 12 L34 31 L15 39 Z"/></g><path d="M31 6 L18 25 L26 25 L15 42" stroke="url(#mg)" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/><g fill="#cdd3f0"><circle cx="9" cy="13" r="2"/><circle cx="23" cy="8" r="2"/><circle cx="39" cy="12" r="2"/><circle cx="34" cy="31" r="2"/><circle cx="15" cy="39" r="2"/></g><circle cx="24.5" cy="23" r="3" fill="#a3e635"/><circle cx="20" cy="29" r="2.5" fill="#84cc16"/><defs><linearGradient id="mg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9b82ff"/><stop offset="1" stop-color="#6c4cff"/></linearGradient></defs></svg><span style="color:#15122b">Орион</span><span class="logosub" style="color:#9a98b8">· Агро · на стеке Яндекса</span></div></div>
+ <div class="body">
+  <h2 class="rv">SOM растёт не вширь по 540, а <span class="vio">вверх по стеку</span></h2>
+  <div class="row" style="align-items:flex-end;margin-top:2px">
+   <div class="col rv" style="flex:1.3">
+    <svg width="640" height="320" viewBox="0 0 640 320">
+      <line x1="44" y1="270" x2="630" y2="270" stroke="#e9e6f4"/>
+      <g font-family="Manrope" font-size="11" fill="#8b88a6" text-anchor="middle"><text x="100" y="292">2027</text><text x="220" y="292">2028</text><text x="340" y="292">2029·коммит</text><text x="460" y="292">2030</text><text x="580" y="292">2031</text></g>
+      <rect class="bargrow" x="80"  y="264.7" width="40" height="5.3"   rx="5" fill="#ddeebb"/>
+      <rect class="bargrow" x="200" y="243.3" width="40" height="26.7"  rx="6" fill="#bfe07e"/>
+      <rect class="bargrow" x="320" y="190"   width="40" height="80"    rx="6" fill="#6c4cff"/>
+      <rect class="bargrow" x="440" y="136.7" width="40" height="133.3" rx="6" fill="#9ccb4e"/>
+      <rect class="bargrow" x="560" y="70"    width="40" height="200"   rx="6" fill="#84cc16"/>
+      <g font-family="Manrope" font-weight="800" font-size="13" fill="#14121f" text-anchor="middle"><text x="100" y="258">1,2</text><text x="220" y="236">6</text><text x="340" y="78" fill="#6c4cff" font-size="16">18</text><text x="460" y="126">30</text><text x="580" y="60">45</text></g>
+      <polyline class="line" points="100,268 220,256 340,219 460,160 580,90" fill="none" stroke="#14121f" stroke-width="3" stroke-dasharray="900" stroke-dashoffset="900"/>
+      <g class="ptg"><circle cx="100" cy="268" r="4" fill="#14121f"/><circle cx="220" cy="256" r="4" fill="#14121f"/><circle cx="340" cy="219" r="6" fill="#6c4cff"/><circle cx="460" cy="160" r="4" fill="#14121f"/><circle cx="580" cy="90" r="4" fill="#14121f"/></g>
+      <g font-family="Manrope" font-weight="800" font-size="11" fill="#14121f"><text x="74" y="272" text-anchor="end">0,08</text><text x="244" y="263">0,5</text><text x="366" y="226" fill="#6c4cff">~1,9</text><text x="486" y="168">3,9</text><text x="600" y="98">6,4</text></g>
+      <text x="44" y="18" font-family="Inter" font-size="11" fill="#8b88a6">столбцы — GMV (потолок), линия — выручка платформы (SOM), млрд ₽</text>
+    </svg>
+   </div>
+   <div class="col" style="display:flex;flex-direction:column;gap:8px">
+    <div class="rv" style="font-family:Manrope;font-weight:800;color:#14121f;font-size:13px">Структура выручки по схемам · 2029 → 2031</div>
+    <div class="rv" style="display:flex;align-items:center;gap:8px"><span style="width:11px;height:11px;border-radius:3px;background:#6c4cff"></span><span style="flex:1;font-size:12.5px">Маркетплейс take ~5%</span><span class="mono" style="font-weight:800;font-size:12.5px">1,35 → 3,6</span></div><div class="rv" style="display:flex;align-items:center;gap:8px"><span style="width:11px;height:11px;border-radius:3px;background:#65a30d"></span><span style="flex:1;font-size:12.5px">Pro · 55 ₽/га</span><span class="mono" style="font-weight:800;font-size:12.5px">0,19 → 0,69</span></div><div class="rv" style="display:flex;align-items:center;gap:8px"><span style="width:11px;height:11px;border-radius:3px;background:#cf8a18"></span><span style="flex:1;font-size:12.5px">IoT / телеметрия</span><span class="mono" style="font-weight:800;font-size:12.5px">0,14 → 0,56</span></div><div class="rv" style="display:flex;align-items:center;gap:8px"><span style="width:11px;height:11px;border-radius:3px;background:#14b8a6"></span><span style="flex:1;font-size:12.5px">Инфра (usage)</span><span class="mono" style="font-weight:800;font-size:12.5px">0,13 → 0,54</span></div><div class="rv" style="display:flex;align-items:center;gap:8px"><span style="width:11px;height:11px;border-radius:3px;background:#9a8cff"></span><span style="flex:1;font-size:12.5px">S4 финтех/страховка</span><span class="mono" style="font-weight:800;font-size:12.5px">— → 1,0</span></div>
+    <div class="card rv" style="margin-top:4px;background:#efeaff;border-color:#d9d0ff;padding:11px 14px"><div class="mono" style="font-family:Manrope;font-weight:900;font-size:13.5px">GMV 45 → выручка 6,4 → EBITDA 1,7 <span style="color:#5f8c12">(27%)</span></div><div class="ksub" style="font-size:10.5px;color:#3d2f6b">Чистыми на оборот <b>3,9%</b> · take <b>8%</b> (B2B-бенч 5–10%) · поле.рф 168 млрд → мы ~¼ · Indigo ~$1 млрд → строим треть</div></div>
+   </div>
+  </div>
+ </div>
+ <div class="foot"><span class="pn"></span><span class="prog"><i></i></span><span>Цифры — Агро_фин-модель_2026-2031.xlsx</span></div>
+</section>
+<section class="slide">
+ <div class="head"><div class="eyebrow">09 · Горизонт расширения</div><div class="logo"><svg class="mark" viewBox="0 0 48 48" fill="none"><g stroke="#cdd3f0" stroke-width="1" opacity=".45"><path d="M9 13 L23 8 L39 12 L34 31 L15 39 Z"/></g><path d="M31 6 L18 25 L26 25 L15 42" stroke="url(#mg)" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/><g fill="#cdd3f0"><circle cx="9" cy="13" r="2"/><circle cx="23" cy="8" r="2"/><circle cx="39" cy="12" r="2"/><circle cx="34" cy="31" r="2"/><circle cx="15" cy="39" r="2"/></g><circle cx="24.5" cy="23" r="3" fill="#a3e635"/><circle cx="20" cy="29" r="2.5" fill="#84cc16"/><defs><linearGradient id="mg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9b82ff"/><stop offset="1" stop-color="#6c4cff"/></linearGradient></defs></svg><span style="color:#15122b">Орион</span><span class="logosub" style="color:#9a98b8">· Агро · на стеке Яндекса</span></div></div>
+ <div class="body">
+  <h2 class="rv">Один data-актив → расширение по <span class="vio">смежным рынкам</span></h2>
+  <p class="lead rv" style="font-size:15px">Доказав ценность на поле, мы расширяемся не «вширь по рынку», а по цепочке создания стоимости: от семян — к смежным входам, затем в животноводство, и дальше — в роботику и финтех. Каждый шаг открывается накопленными данными.</p>
+  <div class="row rv" style="align-items:stretch;height:290px;margin-top:6px;gap:18px"><div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:8px"><div style="text-align:center;max-width:200px"><div style="font-family:Manrope;font-weight:800;font-size:14px;color:#6c4cff">Ядро · поле и семена</div><div style="font-size:11.5px;color:#56536e;margin-top:2px">семеновод-wedge → фермеры → данные «проверено полем»</div></div><div class="gbar" data-h="34" style="width:88%;background:#6c4cff;border-radius:10px 10px 0 0;min-height:8px"></div></div><div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:8px"><div style="text-align:center;max-width:200px"><div style="font-family:Manrope;font-weight:800;font-size:14px;color:#7c5cff">Смежные агровходы</div><div style="font-size:11.5px;color:#56536e;margin-top:2px">СЗР и удобрения — заходим в каналы, где уже доказали полем</div></div><div class="gbar" data-h="56" style="width:88%;background:#7c5cff;border-radius:10px 10px 0 0;min-height:8px"></div></div><div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:8px"><div style="text-align:center;max-width:200px"><div style="font-family:Manrope;font-weight:800;font-size:14px;color:#84cc16">Животноводство · МП для коров</div><div style="font-size:11px;color:#56536e;margin-top:2px">молоко 34 млн т (~½ от 8,9 трлн); падёж/болезни решаются быстро; средние фермы 800–1500 голов — зона роста</div></div><div class="gbar" data-h="78" style="width:88%;background:#84cc16;border-radius:10px 10px 0 0;min-height:8px"></div></div><div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:8px"><div style="text-align:center;max-width:200px"><div style="font-family:Manrope;font-weight:800;font-size:14px;color:#cf8a18">Upside</div><div style="font-size:11.5px;color:#56536e;margin-top:2px">роботикс / автономия (VLA) + полный финтех-пул ~трлн</div></div><div class="gbar" data-h="100" style="width:88%;background:#cf8a18;border-radius:10px 10px 0 0;min-height:8px"></div></div></div>
+ </div>
+ <div class="foot"><span class="pn"></span><span class="prog"><i></i></span><span>Расширение по цепочке стоимости · upside вне базового SOM</span></div>
+</section>
+<section class="slide dark">
+ <div class="stars"></div>
+ <div class="blob" style="width:480px;height:480px;background:var(--vio);right:-150px;top:-160px;opacity:.45"></div>
+ <div class="blob" style="width:420px;height:420px;background:var(--lime2);left:-130px;bottom:-150px;opacity:.25"></div>
+ <div class="head"><div class="eyebrow" style="color:#b9a6ff">10 · Итог</div><div class="logo"><svg class="mark" viewBox="0 0 48 48" fill="none"><g stroke="#cdd3f0" stroke-width="1" opacity=".45"><path d="M9 13 L23 8 L39 12 L34 31 L15 39 Z"/></g><path d="M31 6 L18 25 L26 25 L15 42" stroke="url(#mg)" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/><g fill="#cdd3f0"><circle cx="9" cy="13" r="2"/><circle cx="23" cy="8" r="2"/><circle cx="39" cy="12" r="2"/><circle cx="34" cy="31" r="2"/><circle cx="15" cy="39" r="2"/></g><circle cx="24.5" cy="23" r="3" fill="#a3e635"/><circle cx="20" cy="29" r="2.5" fill="#84cc16"/><defs><linearGradient id="mg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9b82ff"/><stop offset="1" stop-color="#6c4cff"/></linearGradient></defs></svg><span style="color:#eef0ff">Орион</span><span class="logosub" style="color:#8a87b8">· Агро · на стеке Яндекса</span></div></div>
+ <div class="body">
+  <h1 class="rv" style="font-size:44px;color:#fff;max-width:1080px">Все идут к фермеру — и упираются в стену.<br><span class="grad">Орион приходит иначе.</span></h1>
+  <div class="row rv" style="margin-top:6px;gap:16px">
+   <div class="col dcard"><div style="font-family:Manrope;font-weight:800;color:#b9a6ff;font-size:15px;margin-bottom:6px">Почему все застревают</div><p style="color:#c9c6ec;font-size:15px;line-height:1.5">Фермер недоверчив и считает раз в год. А кто берётся монетизировать — становится тем самым продавцом, которому фермер не верит.</p></div>
+   <div class="col dcard"><div style="font-family:Manrope;font-weight:800;color:var(--lime);font-size:15px;margin-bottom:6px">Наш ход</div><p style="color:#c9c6ec;font-size:15px;line-height:1.5">Мы не идём к фермеру первыми. Приходим как <b style="color:#fff">оценщик и навигатор</b>: выдача по полю, источник — спутник и обмолот, позицию купить нельзя. А платит тот, кому фермер уже верит — <b style="color:#fff">семеновод.</b></p></div>
+  </div>
+  <div class="dcard rv" style="margin-top:10px"><div style="color:#eef0ff;font-size:15px;line-height:1.5">🔒 <b>Почему не скопировать:</b> поле.рф добавит AI-агронома за 6–9 месяцев — но не сделает его неподкупным: за ним банк и ФосАгро, которым он же и продаёт. А <b style="color:var(--lime)">первый пилот за один сезон скажет, жива петля или нет.</b></div></div>
+  <div class="rv" style="margin-top:14px;font-family:'Manrope';font-weight:900;font-size:26px;color:#fff;text-align:center">«Кто первым докажет полем — <span class="grad">тот первым и продаст»</span></div>
+ </div>
+ <div class="foot"><span class="pn" style="color:#9b93c9"></span><span class="prog" style="background:rgba(255,255,255,.12)"><i></i></span><span style="color:#9b93c9">Орион · Яндекс Growth Lab</span></div>
+</section></div><div class=navhint>← → навигация · цифры 1–9,0 · F полный экран · P печать в PDF</div><div class=dots id=dots></div><script>
+const slides=[...document.querySelectorAll('.slide')];let cur=0;const total=slides.length;
+const dots=document.getElementById('dots');
+slides.forEach((s,i)=>{const b=document.createElement('b');if(i===0)b.className='on';b.onclick=()=>go(i);dots.appendChild(b);});
+function scale(){const k=Math.min(innerWidth/1280,innerHeight/720)*0.96;slides.forEach(s=>s.style.zoom=k);}
+function fmt(v,dec){let s=dec?v.toFixed(dec).replace('.',','):Math.round(v).toString();let p=s.split(',');p[0]=p[0].replace(/\B(?=(\d{3})+(?!\d))/g,' ');return p.join(',');}
+function animate(s){
+ s.querySelectorAll('[data-count]').forEach(el=>{const to=+el.dataset.count,dec=+(el.dataset.dec||0);const t0=performance.now();(function tick(t){let p=Math.min(1,(t-t0)/900);p=1-Math.pow(1-p,3);el.textContent=fmt(to*p,dec);if(p<1)requestAnimationFrame(tick);})(t0);});
+ s.querySelectorAll('.gbar').forEach((b,i)=>{const horiz=b.parentElement&&b.parentElement.offsetWidth>b.parentElement.offsetHeight&&b.style.height&&b.style.height.indexOf('px')<0&&b.dataset.h&&b.style.width;const prop=(b.style.width&&!b.style.background.includes('grad'))?null:null;
+   // generic: animate width if width set as %, else height
+   const isW=b.style.width&&b.dataset.h&&getComputedStyle(b).borderRadius;const target=b.dataset.h+'%';
+   if(b.tagName.toLowerCase()!=='rect'){const dim=(b.parentElement&&b.parentElement.clientHeight<=20)?'width':'height';b.style[dim]='0';void b.offsetWidth;setTimeout(()=>{b.style.transition=dim+' .9s cubic-bezier(.2,.8,.2,1)';b.style[dim]=target;},90+i*55);}});
+ s.querySelectorAll('.don').forEach(c=>{const len=490,frac=parseFloat(c.dataset.frac);c.style.transition='none';c.setAttribute('stroke-dashoffset',len);void c.getBoundingClientRect();setTimeout(()=>{c.style.transition='stroke-dashoffset 1.1s cubic-bezier(.3,.8,.3,1)';c.setAttribute('stroke-dashoffset',len-len*frac);},150);});
+ s.querySelectorAll('.line').forEach(l=>{l.style.transition='none';l.setAttribute('stroke-dashoffset',900);void l.getBoundingClientRect();setTimeout(()=>{l.style.transition='stroke-dashoffset 1.3s ease';l.setAttribute('stroke-dashoffset',0);},250);});
+ const ptg=s.querySelector('.ptg');if(ptg){ptg.style.opacity=0;setTimeout(()=>{ptg.style.transition='opacity .6s';ptg.style.opacity=1;},900);}
+ s.querySelectorAll('.rv').forEach((el,i)=>{el.classList.remove('rv-go');el.style.animationDelay=(i*60)+'ms';void el.offsetWidth;el.classList.add('rv-go');});
+}
+function go(n){cur=Math.max(0,Math.min(total-1,n));slides.forEach((s,i)=>s.classList.toggle('active',i===cur));[...dots.children].forEach((b,i)=>b.classList.toggle('on',i===cur));
+ slides.forEach(s=>{const pn=s.querySelector('.pn');if(pn)pn.textContent=String(cur+1).padStart(2,'0')+' / '+String(total).padStart(2,'0');const pr=s.querySelector('.prog i');if(pr)pr.style.width=((cur+1)/total*100)+'%';});
+ 
+ animate(slides[cur]);scale();}
+addEventListener('keydown',e=>{if(['ArrowRight','ArrowDown',' ','PageDown'].includes(e.key)){go(cur+1);e.preventDefault();}else if(['ArrowLeft','ArrowUp','PageUp'].includes(e.key)){go(cur-1);}else if(e.key==='Home')go(0);else if(e.key==='End')go(total-1);else if(e.key==='f'||e.key==='F')document.documentElement.requestFullscreen?.();else if(e.key==='p'||e.key==='P')print();else if(/^[0-9]$/.test(e.key))go((+e.key||10)-1);});
+addEventListener('click',e=>{if(e.target.closest('.dots')||e.target.closest('video')||e.target.closest('.imgwrap'))return;if(e.clientX<innerWidth*.26)go(cur-1);else if(e.clientX>innerWidth*.74)go(cur+1);});
+addEventListener('resize',scale);go(0);
+</script></body></html>
