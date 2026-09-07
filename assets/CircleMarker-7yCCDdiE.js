@@ -1,0 +1,1 @@
+import{c as e,l as t,o as n,s as r}from"./leaflet-Cc-8OK5e.js";function i(e,t,n){t.center!==n.center&&e.setLatLng(t.center),t.radius!=null&&t.radius!==n.radius&&e.setRadius(t.radius)}var a=e(),o=n(function({center:e,children:n,...i},o){let s=new a.CircleMarker(e,i);return r(s,t(o,{overlayContainer:s}))},i);export{o as t};

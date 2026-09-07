@@ -1,0 +1,1 @@
+import{i as e}from"./jsx-runtime-DUAcabCT.js";import{t}from"./react-DbyrFoBd.js";import{t as n,tt as r}from"./CartesianChart-BuFRciSp.js";var i=e(t()),a=[`axis`],o=(0,i.forwardRef)((e,t)=>i.createElement(n,{chartName:`ComposedChart`,defaultTooltipEventType:`axis`,validateTooltipEventTypes:a,tooltipPayloadSearcher:r,categoricalChartProps:e,ref:t}));export{o as t};
